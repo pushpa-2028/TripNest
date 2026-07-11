@@ -1,0 +1,96 @@
+.dashboard {
+    padding: 40px;
+    background: #f5f7fb;
+    min-height: 90vh;
+}
+
+.dashboard h1 {
+    text-align: center;
+    color: #1565c0;
+    margin-bottom: 40px;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.dashboard-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-card h2 {
+    color: #1565c0;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.dashboard-card p {
+    color: #666;
+    font-size: 18px;
+}
+
+.recent-trips {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.recent-trips h2 {
+    text-align: center;
+    color: #1565c0;
+    margin-bottom: 20px;
+}
+
+.recent-trips table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.recent-trips th {
+    background: #1565c0;
+    color: white;
+    padding: 14px;
+}
+
+.recent-trips td {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.recent-trips tr:hover {
+    background: #f4f8ff;
+}
+
+@media (max-width: 992px) {
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard {
+        padding: 20px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .recent-trips {
+        overflow-x: auto;
+    }
+}
