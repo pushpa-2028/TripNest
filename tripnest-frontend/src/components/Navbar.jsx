@@ -1,52 +1,110 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.css";
 
 function Navbar() {
-  return (
-    <nav className="navbar">
 
-      <div className="logo">
-        TripNest
-      </div>
+    const location = useLocation();
 
-      <ul className="nav-links">
+    return (
 
-        <li>
-          <Link to="/">Home</Link>
-        </li>
+        <header className="navbar">
 
-        <li>
-          <Link to="/dashboard">Dashboard</Link>
-        </li>
+            <div className="nav-container">
 
-        <li>
-          <Link to="/create-trip">Create Trip</Link>
-        </li>
+                <Link to="/" className="logo">
 
-        <li>
-          <Link to="/my-trips">My Trips</Link>
-        </li>
+                    <span className="logo-icon">✈️</span>
 
-        <li>
-          <Link to="/destinations">Destinations</Link>
-        </li>
+                    <div className="logo-text">
 
-        <li>
-          <Link to="/add-destination">Add Destination</Link>
-        </li>
+                        <h2>TripNest</h2>
 
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+                        <small>Explore Beyond Limits</small>
 
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
+                    </div>
 
-      </ul>
+                </Link>
 
-    </nav>
-  );
+                <nav>
+
+                    <ul className="nav-links">
+
+                        <li>
+                            <Link
+                                className={location.pathname === "/" ? "active" : ""}
+                                to="/"
+                            >
+                                Home
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link
+                                className={location.pathname === "/dashboard" ? "active" : ""}
+                                to="/dashboard"
+                            >
+                                Dashboard
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link
+                                className={location.pathname === "/my-trips" ? "active" : ""}
+                                to="/my-trips"
+                            >
+                                My Trips
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link
+                                className={location.pathname === "/create-trip" ? "active" : ""}
+                                to="/create-trip"
+                            >
+                                Create Trip
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link
+                                className={location.pathname === "/destinations" ? "active" : ""}
+                                to="/destinations"
+                            >
+                                Destinations
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link
+                                className={location.pathname === "/add-destination" ? "active" : ""}
+                                to="/add-destination"
+                            >
+                                Add Destination
+                            </Link>
+                        </li>
+
+                    </ul>
+
+                </nav>
+
+                <div className="nav-buttons">
+
+                    <Link className="login-btn-nav" to="/login">
+                        Login
+                    </Link>
+
+                    <Link className="register-btn-nav" to="/register">
+                        Register
+                    </Link>
+
+                </div>
+
+            </div>
+
+        </header>
+
+    );
+
 }
 
 export default Navbar;

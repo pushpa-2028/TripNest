@@ -1,44 +1,248 @@
-.navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+/* ==========================================
+                NAVBAR
+========================================== */
 
-    background: #0d6efd;
-    color: white;
+.navbar{
 
-    padding: 18px 60px;
+    position:sticky;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    top:0;
+
+    z-index:1000;
+
+    width:100%;
+
+    background:rgba(255,255,255,.88);
+
+    backdrop-filter:blur(15px);
+
+    -webkit-backdrop-filter:blur(15px);
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
 }
 
-.logo {
-    font-size: 30px;
-    font-weight: bold;
-    color: white;
+/* ==========================================
+            NAV CONTAINER
+========================================== */
+
+.nav-container{
+
+    width:92%;
+
+    max-width:1400px;
+
+    margin:auto;
+
+    height:78px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
 }
 
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 30px;
-    margin: 0;
-    padding: 0;
+/* ==========================================
+               LOGO
+========================================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    text-decoration:none;
+
 }
 
-.nav-links li {
-    list-style: none;
+.logo-icon{
+
+    font-size:38px;
+
 }
 
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    font-weight: 500;
-    transition: 0.3s;
+.logo-text h2{
+
+    color:#2563eb;
+
+    font-size:28px;
+
+    margin:0;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
 }
 
-.nav-links a:hover {
-    color: #ffd43b;
+.logo-text small{
+
+    color:#64748b;
+
+    font-size:12px;
+
+    letter-spacing:1px;
+
+}
+
+/* ==========================================
+            NAV LINKS
+========================================== */
+
+.nav-links{
+
+    display:flex;
+
+    gap:28px;
+
+    list-style:none;
+
+    align-items:center;
+
+}
+
+.nav-links a{
+
+    color:#334155;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    padding:8px 15px;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+}
+
+.nav-links a:hover{
+
+    color:#2563eb;
+
+    background:#eff6ff;
+
+}
+
+.active{
+
+    background:#2563eb;
+
+    color:white !important;
+
+}
+
+/* ==========================================
+            BUTTONS
+========================================== */
+
+.nav-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.login-btn-nav{
+
+    padding:11px 24px;
+
+    border:2px solid #2563eb;
+
+    border-radius:10px;
+
+    color:#2563eb;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.login-btn-nav:hover{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+.register-btn-nav{
+
+    padding:11px 24px;
+
+    background:#2563eb;
+
+    color:white;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.register-btn-nav:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 20px rgba(37,99,235,.25);
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:1100px){
+
+    .nav-links{
+
+        display:none;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .nav-container{
+
+        width:95%;
+
+        height:70px;
+
+    }
+
+    .logo-text small{
+
+        display:none;
+
+    }
+
+    .logo-text h2{
+
+        font-size:24px;
+
+    }
+
+    .login-btn-nav,
+    .register-btn-nav{
+
+        padding:10px 18px;
+
+        font-size:14px;
+
+    }
+
 }

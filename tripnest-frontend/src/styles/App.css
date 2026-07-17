@@ -1,19 +1,309 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ==========================================
+           GOOGLE FONT
+========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ==========================================
+              RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f7fb;
+html{
+    scroll-behavior:smooth;
 }
 
-.container {
-    padding: 40px;
-    text-align: center;
-    min-height: 80vh;
+/* ==========================================
+              BODY
+========================================== */
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:#f8fafc;
+
+    color:#1e293b;
+
+    overflow-x:hidden;
+
 }
+
+/* ==========================================
+             LINKS
+========================================== */
+
 a{
+
     text-decoration:none;
+
+    color:inherit;
+
+    transition:.3s;
+
+}
+
+/* ==========================================
+              LISTS
+========================================== */
+
+ul{
+
+    list-style:none;
+
+}
+
+/* ==========================================
+              BUTTONS
+========================================== */
+
+button{
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+              INPUTS
+========================================== */
+
+input,
+textarea,
+select{
+
+    font-family:'Poppins',sans-serif;
+
+    outline:none;
+
+}
+
+/* ==========================================
+             CONTAINER
+========================================== */
+
+.container{
+
+    width:90%;
+
+    max-width:1300px;
+
+    margin:auto;
+
+}
+
+/* ==========================================
+              HEADINGS
+========================================== */
+
+h1{
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+h2{
+
+    font-size:34px;
+
+    font-weight:600;
+
+}
+
+h3{
+
+    font-size:26px;
+
+    font-weight:600;
+
+}
+
+p{
+
+    line-height:1.7;
+
+    color:#475569;
+
+}
+
+/* ==========================================
+           CUSTOM SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#e2e8f0;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ==========================================
+             CARD STYLE
+========================================== */
+
+.card{
+
+    background:white;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.15);
+
+}
+
+/* ==========================================
+            PRIMARY BUTTON
+========================================== */
+
+.primary-btn{
+
+    display:inline-block;
+
+    padding:14px 32px;
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+}
+
+.primary-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ==========================================
+           SECTION
+========================================== */
+
+.section{
+
+    padding:80px 0;
+
+}
+
+/* ==========================================
+          FADE ANIMATION
+========================================== */
+
+.fade-up{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+           RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    h1{
+
+        font-size:34px;
+
+    }
+
+    h2{
+
+        font-size:28px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .container{
+
+        width:95%;
+
+    }
+
+    h1{
+
+        font-size:28px;
+
+    }
+
+    h2{
+
+        font-size:24px;
+
+    }
+
 }
