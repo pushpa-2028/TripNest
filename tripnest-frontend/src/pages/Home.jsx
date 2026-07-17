@@ -11,15 +11,15 @@ function Home() {
           </h1>
 
           <p>
-            Plan your dream vacation, manage your trips,
-            track expenses and create unforgettable memories.
+            Plan your dream vacation, manage your trips, track expenses,
+            and create unforgettable memories.
           </p>
 
           <button>Start Planning</button>
         </div>
       </section>
 
-      {/* Destinations */}
+      {/* Popular Destinations */}
 
       <section className="destinations">
 
@@ -30,28 +30,37 @@ function Home() {
           <div className="card">
             <img
               src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600"
-              alt=""
+              alt="Goa"
             />
-            <h3>Goa</h3>
-            <p>Beautiful beaches and nightlife.</p>
+
+            <div className="card-content">
+              <h3>Goa</h3>
+              <p>Beautiful beaches and exciting nightlife.</p>
+            </div>
           </div>
 
           <div className="card">
             <img
               src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600"
-              alt=""
+              alt="Paris"
             />
-            <h3>Paris</h3>
-            <p>The city of lights and romance.</p>
+
+            <div className="card-content">
+              <h3>Paris</h3>
+              <p>The city of lights and romance.</p>
+            </div>
           </div>
 
           <div className="card">
             <img
               src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600"
-              alt=""
+              alt="Switzerland"
             />
-            <h3>Switzerland</h3>
-            <p>Snowy mountains and scenic beauty.</p>
+
+            <div className="card-content">
+              <h3>Switzerland</h3>
+              <p>Snow-covered mountains and breathtaking landscapes.</p>
+            </div>
           </div>
 
         </div>
