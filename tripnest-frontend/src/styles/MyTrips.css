@@ -1,96 +1,249 @@
-.trips-container {
-    width: 90%;
-    margin: 40px auto;
+/* =====================================
+   MY TRIPS PAGE
+===================================== */
+
+.myTrips {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eef5ff, #f8fbff);
+    padding: 110px 40px 40px;
 }
 
-.trips-container h2 {
+/* =====================================
+   HEADER
+===================================== */
+
+.pageHeader {
     text-align: center;
+    margin-bottom: 35px;
+}
+
+.pageHeader h1 {
+    font-size: 40px;
     color: #1565c0;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
-.trip-table {
+.pageHeader p {
+    color: #666;
+    font-size: 17px;
+}
+
+/* =====================================
+   SEARCH
+===================================== */
+
+.searchContainer {
+    max-width: 550px;
+    margin: 0 auto 40px;
+    position: relative;
+}
+
+.searchContainer input {
     width: 100%;
-    border-collapse: collapse;
+    padding: 15px 20px 15px 50px;
+    border: none;
+    outline: none;
+    border-radius: 50px;
     background: white;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-    border-radius: 12px;
-    overflow: hidden;
+    font-size: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
 }
 
-.trip-table th {
-    background: #1565c0;
-    color: white;
-    padding: 18px;
+.searchIcon {
+    position: absolute;
+    left: 18px;
+    top: 16px;
+    color: #1565c0;
     font-size: 18px;
 }
 
-.trip-table td {
-    padding: 18px 12px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    vertical-align: middle;
+/* =====================================
+   GRID
+===================================== */
+
+.tripGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px,1fr));
+    gap: 28px;
+}
+.buttonGrid{
+    margin-top:auto;
 }
 
-.trip-table tr:hover {
-    background: #f5f9ff;
-}
+/* =====================================
+   CARD
+===================================== */
 
-/* Action Buttons */
-
-.trip-table td:last-child {
+.tripCard {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    transition: .35s;
+    border-top: 5px solid #1565c0;
+    height: 100%;
+}
+.tripCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(0,0,0,.15);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.cardHeader h2 {
+    color: #1565c0;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.destination {
+    display: inline-flex;
     align-items: center;
+    gap: 8px;
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.budget {
+    background: linear-gradient(135deg,#1565c0,#42a5f5);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.dates {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color:#555;
+    margin-bottom: 18px;
+}
+
+.description {
+    color:#666;
+    line-height: 1.7;
+    margin-bottom: 20px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+
+/* =====================================
+   BUTTONS
+===================================== */
+
+.buttonGrid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
     gap: 10px;
 }
 
-.edit-btn,
-.itinerary-btn,
-.delete-btn {
+.buttonGrid button {
     border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
+    border-radius: 10px;
+    padding: 12px;
+    color: white;
     cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
-    min-width: 95px;
-    transition: 0.3s;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: .3s;
 }
 
-.edit-btn {
-    background: #ffc107;
-    color: black;
+.buttonGrid button:hover {
+    transform: translateY(-3px);
 }
 
-.edit-btn:hover {
-    background: #e0a800;
+.edit {
+    background: #f9a825;
+    color: #222;
 }
 
-.itinerary-btn {
-    background: #0d6efd;
-    color: white;
+.blue {
+    background: #1565c0;
 }
 
-.itinerary-btn:hover {
-    background: #0b5ed7;
+.green {
+    background: #00897b;
 }
 
-.delete-btn {
-    background: #dc3545;
-    color: white;
+.purple {
+    background: #8e24aa;
 }
 
-.delete-btn:hover {
-    background: #bb2d3b;
+.indigo {
+    background: #5e35b1;
 }
 
-@media (max-width: 900px) {
+.delete {
+    background: #e53935;
+}
 
-    .trip-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
+/* =====================================
+   EMPTY STATE
+===================================== */
+
+.emptyCard {
+    grid-column: 1/-1;
+    background: white;
+    border-radius: 20px;
+    padding: 60px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.emptyCard h2 {
+    color: #1565c0;
+    margin-bottom: 10px;
+}
+
+.emptyCard p {
+    color: #666;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width:768px) {
+
+    .myTrips {
+        padding: 95px 18px 20px;
+    }
+
+    .tripGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .cardHeader {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .buttonGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .pageHeader h1 {
+        font-size: 32px;
     }
 
 }

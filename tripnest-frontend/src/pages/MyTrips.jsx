@@ -1,148 +1,241 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import {
+  FaEdit,
+  FaTrash,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaWallet,
+  FaUsers,
+  FaFileAlt,
+  FaRoute,
+  FaSearch
+} from "react-icons/fa";
+
 import "../styles/MyTrips.css";
 
 function MyTrips() {
+  const [trips, setTrips] = useState([]);
+  const [search, setSearch] = useState("");
 
-    const [trips, setTrips] = useState([]);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchTrips();
-    }, []);
+  useEffect(() => {
+    fetchTrips();
+  }, []);
 
-    const fetchTrips = async () => {
+  const fetchTrips = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/trips"
+      );
 
-        try {
+      setTrips(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-            const response = await axios.get(
-                "http://localhost:8080/api/trips"
-            );
+  const editTrip = (id) => {
+    navigate(`/edit-trip/${id}`);
+  };
 
-            setTrips(response.data);
+  const manageItinerary = (id) => {
+    navigate(`/trip/${id}/itinerary`);
+  };
 
-        } catch (error) {
+  const manageExpenses = (id) => {
+    navigate(`/trip/${id}/expenses`);
+  };
 
-            console.log(error);
+  const manageMembers = (id) => {
+    navigate(`/trip/${id}/members`);
+  };
 
-        }
+  const manageDocuments = (id) => {
+    navigate(`/trip/${id}/documents`);
+  };
 
-    };
+  const deleteTrip = async (id) => {
+    if (!window.confirm("Delete this trip?")) return;
 
-    const editTrip = (id) => {
-        navigate(`/edit-trip/${id}`);
-    };
+    try {
+      await axios.delete(
+        `http://localhost:8080/api/trips/${id}`
+      );
 
-    const manageItinerary = (id) => {
-        navigate(`/trip/${id}/itinerary`);
-    };
+      fetchTrips();
+    } catch (error) {
+      console.log(error);
+      alert("Failed to delete trip.");
+    }
+  };
 
-    const deleteTrip = async (id) => {
-
-        const confirmDelete = window.confirm(
-            "Are you sure you want to delete this trip?"
-        );
-
-        if (!confirmDelete) {
-            return;
-        }
-
-        try {
-
-            await axios.delete(
-                `http://localhost:8080/api/trips/${id}`
-            );
-
-            alert("Trip deleted successfully!");
-
-            fetchTrips();
-
-        } catch (error) {
-
-            console.log(error);
-            alert("Failed to delete trip.");
-
-        }
-
-    };
+  const filteredTrips = trips.filter((trip) => {
+    const text = search.toLowerCase();
 
     return (
-
-        <div className="trips-container">
-
-            <h2>My Trips</h2>
-
-            <table className="trip-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>ID</th>
-                        <th>Trip Name</th>
-                        <th>Destination</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Budget</th>
-                        <th>Description</th>
-                        <th>Actions</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {trips.map((trip) => (
-
-                        <tr key={trip.id}>
-
-                            <td>{trip.id}</td>
-                            <td>{trip.tripName}</td>
-                            <td>{trip.destination}</td>
-                            <td>{trip.startDate}</td>
-                            <td>{trip.endDate}</td>
-                            <td>₹{trip.budget}</td>
-                            <td>{trip.description}</td>
-
-                            <td>
-
-                                <button
-                                    className="edit-btn"
-                                    onClick={() => editTrip(trip.id)}
-                                >
-                                    Edit
-                                </button>
-
-                                <button
-                                    className="itinerary-btn"
-                                    onClick={() => manageItinerary(trip.id)}
-                                >
-                                    Itinerary
-                                </button>
-
-                                <button
-                                    className="delete-btn"
-                                    onClick={() => deleteTrip(trip.id)}
-                                >
-                                    Delete
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                    ))}
-
-                </tbody>
-
-            </table>
-
-        </div>
-
+      trip.tripName.toLowerCase().includes(text) ||
+      trip.destination.toLowerCase().includes(text)
     );
+  });
 
+  return (
+    <div className="myTrips">
+
+      <div className="pageHeader">
+
+        <h1>🌍 My Trips</h1>
+
+        <p>
+          Organize and manage all your travel plans.
+        </p>
+
+      </div>
+
+      <div className="searchContainer">
+
+        <FaSearch className="searchIcon" />
+
+        <input
+          type="text"
+          placeholder="Search trip..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+      </div>
+
+      <div className="tripGrid">
+
+        {filteredTrips.length === 0 ? (
+
+          <div className="emptyCard">
+
+            <h2>No Trips Found</h2>
+
+            <p>Create your first trip.</p>
+
+          </div>
+
+        ) : (
+
+          filteredTrips.map((trip) => (
+
+            <div className="tripCard" key={trip.id}>
+
+              <div className="cardHeader">
+
+                <div>
+
+                  <h2>{trip.tripName}</h2>
+
+                  <span className="destination">
+
+                    <FaMapMarkerAlt />
+
+                    {trip.destination}
+
+                  </span>
+
+                </div>
+
+                <div className="budget">
+
+                  ₹{Number(trip.budget).toLocaleString()}
+
+                </div>
+
+              </div>
+
+              <div className="dates">
+
+                <FaCalendarAlt />
+
+                <span>
+
+                  {trip.startDate} → {trip.endDate}
+
+                </span>
+
+              </div>
+
+              <div className="description">
+
+                {trip.description}
+
+              </div>
+
+              <div className="buttonGrid">
+
+                <button
+                  className="edit"
+                  onClick={() => editTrip(trip.id)}
+                >
+                  <FaEdit />
+
+                  Edit
+                </button>
+
+                <button
+                  className="blue"
+                  onClick={() => manageItinerary(trip.id)}
+                >
+                  <FaRoute />
+
+                  Itinerary
+                </button>
+
+                <button
+                  className="green"
+                  onClick={() => manageExpenses(trip.id)}
+                >
+                  <FaWallet />
+
+                  Expenses
+                </button>
+
+                <button
+                  className="purple"
+                  onClick={() => manageMembers(trip.id)}
+                >
+                  <FaUsers />
+
+                  Members
+                </button>
+
+                <button
+                  className="indigo"
+                  onClick={() => manageDocuments(trip.id)}
+                >
+                  <FaFileAlt />
+
+                  Documents
+                </button>
+
+                <button
+                  className="delete"
+                  onClick={() => deleteTrip(trip.id)}
+                >
+                  <FaTrash />
+
+                  Delete
+                </button>
+
+              </div>
+
+            </div>
+
+          ))
+
+        )}
+
+      </div>
+
+    </div>
+  );
 }
 
 export default MyTrips;

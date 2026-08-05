@@ -15,6 +15,10 @@ import TripItinerary from "./pages/TripItinerary";
 import AddDestination from "./pages/AddDestination";
 import Destinations from "./pages/Destinations";
 import EditDestination from "./pages/EditDestination";
+import Expenses from "./pages/Expenses";
+import AddExpense from "./pages/AddExpense";
+import TripMembers from "./pages/TripMembers";
+import Documents from "./pages/Documents";
 import NotFound from "./pages/NotFound";
 
 import "./styles/App.css";
@@ -36,6 +40,16 @@ function App() {
 
         <Route path="/trip/:id/itinerary" element={<TripItinerary />} />
         <Route path="/trip/:id/add-itinerary" element={<AddItinerary />} />
+
+        {/* Expense */}
+        <Route path="/trip/:id/expenses" element={<Expenses />} />
+        <Route path="/trip/:id/add-expense" element={<AddExpense />} />
+
+        {/* Members */}
+        <Route path="/trip/:id/members" element={<TripMembers />} />
+
+        {/* Documents */}
+        <Route path="/trip/:id/documents" element={<Documents />} />
 
         <Route path="/add-destination" element={<AddDestination />} />
         <Route path="/destinations" element={<Destinations />} />

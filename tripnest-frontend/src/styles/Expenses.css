@@ -1,0 +1,285 @@
+/* ===================================
+   EXPENSES PAGE
+=================================== */
+
+.expensesPage {
+    min-height: 100vh;
+    padding: 110px 40px 40px;
+    background: linear-gradient(135deg, #eef5ff, #f8fbff);
+}
+
+/* ===================================
+   HEADER
+=================================== */
+
+.expenseHeader {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.expenseHeader h1 {
+    font-size: 40px;
+    color: #1565c0;
+    margin-bottom: 10px;
+}
+
+.expenseHeader p {
+    color: #666;
+    font-size: 17px;
+}
+
+/* ===================================
+   SUMMARY CARDS
+=================================== */
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.summaryCard {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    transition: .3s;
+}
+
+
+.summaryCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 35px rgba(0,0,0,.15);
+}
+
+.summaryIcon {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.summaryCard h3 {
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.summaryCard p {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+
+/* Card Colors */
+
+.budgetCard {
+    border-top: 5px solid #1565c0;
+}
+
+.budgetCard .summaryIcon {
+    color: #1565c0;
+}
+
+.expenseCard {
+    border-top: 5px solid #e53935;
+}
+
+.expenseCard .summaryIcon {
+    color: #e53935;
+}
+
+.remainCard {
+    border-top: 5px solid #43a047;
+}
+
+.remainCard .summaryIcon {
+    color: #43a047;
+}
+
+.percentCard {
+    border-top: 5px solid #fb8c00;
+}
+
+.percentCard .summaryIcon {
+    color: #fb8c00;
+}
+
+/* ===================================
+   WARNING
+=================================== */
+
+.warningBanner {
+    background: #e53935;
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/* ===================================
+   BUTTON
+=================================== */
+
+.addExpenseBtn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    margin:0 auto 35px;
+
+    border:none;
+    background:linear-gradient(135deg,#1565c0,#42a5f5);
+    color:white;
+    padding:14px 24px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.addExpenseBtn:hover {
+    transform: translateY(-3px);
+}
+
+/* ===================================
+   EXPENSE GRID
+=================================== */
+
+.expenseGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
+    gap: 25px;
+}
+
+/* ===================================
+   EXPENSE CARD
+=================================== */
+
+.expenseCardItem {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    border-top: 5px solid #1565c0;
+    transition: .3s;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.expenseCardItem:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 35px rgba(0,0,0,.15);
+}
+
+.expenseTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.expenseTop h2 {
+    color: #1565c0;
+    font-size: 24px;
+}
+
+.amountBadge {
+    background: linear-gradient(135deg,#1565c0,#42a5f5);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+.expenseInfo p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #555;
+    margin: 10px 0;
+}
+
+.expenseNotes {
+    color: #666;
+    line-height: 1.6;
+    margin: 20px 0;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.deleteExpenseBtn {
+    margin-top: auto;
+    border: none;
+    background: #e53935;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: .3s;
+}
+
+.deleteExpenseBtn:hover {
+    background: #c62828;
+}
+
+/* ===================================
+   EMPTY STATE
+=================================== */
+
+.emptyExpense {
+    grid-column: 1/-1;
+    background: white;
+    border-radius: 18px;
+    padding: 60px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.emptyExpense h2 {
+    color: #1565c0;
+    margin-bottom: 10px;
+}
+
+.emptyExpense p {
+    color: #666;
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media (max-width:768px) {
+
+    .expensesPage {
+        padding: 95px 18px 20px;
+    }
+
+    .expenseHeader h1 {
+        font-size: 32px;
+    }
+
+    .expenseGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .expenseTop {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+}

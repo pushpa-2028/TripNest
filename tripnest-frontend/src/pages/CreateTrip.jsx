@@ -16,16 +16,85 @@ function CreateTrip() {
         description: ""
     });
 
+    const [error, setError] = useState("");
+
+
+    // =====================================
+    // HANDLE INPUT CHANGE
+    // =====================================
+
     const handleChange = (e) => {
+
         setTrip({
             ...trip,
             [e.target.name]: e.target.value
         });
+
+        // Remove old error when user starts correcting data
+        setError("");
     };
+
+
+    // =====================================
+    // VALIDATE FORM
+    // =====================================
+
+    const validateForm = () => {
+
+        if (!trip.tripName.trim()) {
+            return "Please enter a trip name.";
+        }
+
+        if (!trip.destination.trim()) {
+            return "Please enter a destination.";
+        }
+
+        if (!trip.startDate) {
+            return "Please select a start date.";
+        }
+
+        if (!trip.endDate) {
+            return "Please select an end date.";
+        }
+
+        if (
+            new Date(trip.endDate) <
+            new Date(trip.startDate)
+        ) {
+            return "End date cannot be before start date.";
+        }
+
+        if (
+            !trip.budget ||
+            Number(trip.budget) <= 0
+        ) {
+            return "Budget must be greater than ₹0.";
+        }
+
+        if (!trip.description.trim()) {
+            return "Please enter a trip description.";
+        }
+
+        return "";
+    };
+
+
+    // =====================================
+    // CREATE TRIP
+    // =====================================
 
     const createTrip = async (e) => {
 
         e.preventDefault();
+
+        const validationError = validateForm();
+
+        if (validationError) {
+
+            setError(validationError);
+
+            return;
+        }
 
         try {
 
@@ -34,7 +103,9 @@ function CreateTrip() {
                 trip
             );
 
-            alert("Trip Created Successfully!");
+            alert(
+                "Trip Created Successfully!"
+            );
 
             setTrip({
                 tripName: "",
@@ -45,16 +116,21 @@ function CreateTrip() {
                 description: ""
             });
 
+            setError("");
+
             navigate("/my-trips");
 
         } catch (error) {
 
             console.log(error);
-            alert("Failed to create trip.");
+
+            setError(
+                "Failed to create trip. Please try again."
+            );
 
         }
-
     };
+
 
     return (
 
@@ -62,9 +138,37 @@ function CreateTrip() {
 
             <div className="create-trip-card">
 
-                <h2>Create New Trip</h2>
+                <h2>
+                    Create New Trip
+                </h2>
+
+
+                {/* VALIDATION MESSAGE */}
+
+                {error && (
+
+                    <div
+                        style={{
+                            background: "#ffebee",
+                            color: "#c62828",
+                            padding: "12px",
+                            borderRadius: "8px",
+                            marginBottom: "18px",
+                            textAlign: "center"
+                        }}
+                    >
+
+                        {error}
+
+                    </div>
+
+                )}
+
 
                 <form onSubmit={createTrip}>
+
+
+                    {/* TRIP NAME */}
 
                     <input
                         type="text"
@@ -72,8 +176,10 @@ function CreateTrip() {
                         placeholder="Trip Name"
                         value={trip.tripName}
                         onChange={handleChange}
-                        required
                     />
+
+
+                    {/* DESTINATION */}
 
                     <input
                         type="text"
@@ -81,28 +187,38 @@ function CreateTrip() {
                         placeholder="Destination"
                         value={trip.destination}
                         onChange={handleChange}
-                        required
                     />
 
-                    <label>Start Date</label>
+
+                    {/* START DATE */}
+
+                    <label>
+                        Start Date
+                    </label>
 
                     <input
                         type="date"
                         name="startDate"
                         value={trip.startDate}
                         onChange={handleChange}
-                        required
                     />
 
-                    <label>End Date</label>
+
+                    {/* END DATE */}
+
+                    <label>
+                        End Date
+                    </label>
 
                     <input
                         type="date"
                         name="endDate"
                         value={trip.endDate}
                         onChange={handleChange}
-                        required
                     />
+
+
+                    {/* BUDGET */}
 
                     <input
                         type="number"
@@ -110,8 +226,11 @@ function CreateTrip() {
                         placeholder="Budget"
                         value={trip.budget}
                         onChange={handleChange}
-                        required
+                        min="1"
                     />
+
+
+                    {/* DESCRIPTION */}
 
                     <textarea
                         name="description"
@@ -119,11 +238,16 @@ function CreateTrip() {
                         rows="5"
                         value={trip.description}
                         onChange={handleChange}
-                        required
-                    ></textarea>
+                    >
+                    </textarea>
+
+
+                    {/* CREATE BUTTON */}
 
                     <button type="submit">
+
                         Create Trip
+
                     </button>
 
                 </form>
