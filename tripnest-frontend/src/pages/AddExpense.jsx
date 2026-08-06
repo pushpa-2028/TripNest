@@ -83,7 +83,7 @@ function AddExpense() {
         try {
 
             await axios.post(
-                `http://localhost:8080/api/expenses/${id}`,
+                `http://https://tripnest-fird.onrender.com/api/expenses/${id}`,
                 expense
             );
 

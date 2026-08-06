@@ -23,7 +23,7 @@ function Register() {
     try {
 
       await axios.post(
-        "http://localhost:8080/api/auth/register",
+        "http://https://tripnest-fird.onrender.com/api/auth/register",
         user
       );
 

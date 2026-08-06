@@ -17,7 +17,7 @@ function Destinations() {
         try {
 
             const response = await axios.get(
-                "http://localhost:8080/api/destinations"
+                "http://https://tripnest-fird.onrender.com/api/destinations"
             );
 
             setDestinations(response.data);
@@ -47,7 +47,7 @@ function Destinations() {
         try {
 
             await axios.delete(
-                `http://localhost:8080/api/destinations/${id}`
+                `http://https://tripnest-fird.onrender.com/api/destinations/${id}`
             );
 
             alert("Destination deleted successfully!");

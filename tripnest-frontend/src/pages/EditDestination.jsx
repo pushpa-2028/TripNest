@@ -26,7 +26,7 @@ function EditDestination() {
         try {
 
             const response = await axios.get(
-                `http://localhost:8080/api/destinations/${id}`
+                `http://https://tripnest-fird.onrender.com/api/destinations/${id}`
             );
 
             setDestination(response.data);
@@ -55,7 +55,7 @@ function EditDestination() {
         try {
 
             await axios.put(
-                `http://localhost:8080/api/destinations/${id}`,
+                `http://https://tripnest-fird.onrender.com/api/destinations/${id}`,
                 destination
             );
 
