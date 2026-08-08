@@ -1,8 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import API from "../services/api";
 import "../styles/Register.css";
 
 function Register() {
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
     fullName: "",
@@ -21,11 +23,7 @@ function Register() {
     e.preventDefault();
 
     try {
-
-      await axios.post(
-        "http://https://tripnest-fird.onrender.com/api/auth/register",
-        user
-      );
+      await API.post("/auth/register", user);
 
       alert("Registration Successful!");
 
@@ -35,26 +33,23 @@ function Register() {
         password: ""
       });
 
-    } catch (error) {
+      navigate("/login");
 
+    } catch (error) {
       console.log(error);
 
       if (error.response) {
         console.log("Status:", error.response.status);
         console.log("Data:", error.response.data);
-        alert("Registration Failed: " + JSON.stringify(error.response.data));
+        alert("Registration Failed");
       } else {
-        console.log(error.message);
-        alert(error.message);
+        alert("Network Error");
       }
-
     }
   };
 
   return (
-
     <div className="register-container">
-
       <div className="register-card">
 
         <h2>Create Account</h2>
@@ -95,9 +90,7 @@ function Register() {
         </form>
 
       </div>
-
     </div>
-
   );
 }
 
