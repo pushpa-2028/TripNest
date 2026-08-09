@@ -33,7 +33,8 @@ public class SecurityConfig {
 
         // Frontend URLs allowed to access the backend
         configuration.setAllowedOrigins(List.of(
-                "http://localhost:5173"
+                "http://localhost:5173",
+                "https://trip-nest-tau-six.vercel.app"
         ));
 
         // HTTP methods allowed
