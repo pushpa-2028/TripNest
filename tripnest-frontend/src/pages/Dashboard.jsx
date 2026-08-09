@@ -49,7 +49,7 @@ function Dashboard() {
     try {
 
       const tripResponse = await axios.get(
-        "http://https://tripnest-fird.onrender.com/api/trips"
+        "https://tripnest-fird.onrender.com/api/trips"
       );
 
       const tripData = tripResponse.data || [];
@@ -63,7 +63,7 @@ function Dashboard() {
 
       const expenseRequests = tripData.map((trip) =>
         axios.get(
-          `http://https://tripnest-fird.onrender.com/api/expenses/trip/${trip.id}`
+          `https://tripnest-fird.onrender.com/api/expenses/trip/${trip.id}`
         )
       );
 

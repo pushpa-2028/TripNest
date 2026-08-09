@@ -30,7 +30,7 @@ function AddDestination() {
         try {
 
             await axios.post(
-                "http://https://tripnest-fird.onrender.com/api/destinations",
+                "https://tripnest-fird.onrender.com/api/destinations",
                 destination
             );
 

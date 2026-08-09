@@ -30,7 +30,7 @@ function AddItinerary() {
         try {
 
             await axios.post(
-                "http://https://tripnest-fird.onrender.com/api/itineraries",
+                "https://tripnest-fird.onrender.com/api/itineraries",
                 {
                     tripId: id,
                     ...itinerary

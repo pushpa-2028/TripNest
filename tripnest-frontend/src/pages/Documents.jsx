@@ -30,7 +30,7 @@ function Documents() {
         try {
 
             const response = await axios.get(
-                `http://https://tripnest-fird.onrender.com/api/documents/trip/${id}`
+                `https://tripnest-fird.onrender.com/api/documents/trip/${id}`
             );
 
             setDocuments(response.data);
@@ -63,7 +63,7 @@ function Documents() {
         try {
 
             await axios.post(
-                "http://https://tripnest-fird.onrender.com/api/documents/upload",
+                "https://tripnest-fird.onrender.com/api/documents/upload",
                 formData,
                 {
                     headers: {
@@ -97,7 +97,7 @@ function Documents() {
         try {
 
             await axios.delete(
-                `http://https://tripnest-fird.onrender.com/api/documents/${documentId}`
+                `https://tripnest-fird.onrender.com/api/documents/${documentId}`
             );
 
             fetchDocuments();

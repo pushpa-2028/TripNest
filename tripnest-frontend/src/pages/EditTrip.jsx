@@ -26,7 +26,7 @@ function EditTrip() {
         try {
 
             const response = await axios.get(
-                `http://https://tripnest-fird.onrender.com/api/trips/${id}`
+                `https://tripnest-fird.onrender.com/api/trips/${id}`
             );
 
             setTrip(response.data);
@@ -56,7 +56,7 @@ function EditTrip() {
         try {
 
             await axios.put(
-                `http://https://tripnest-fird.onrender.com/api/trips/${id}`,
+                `https://tripnest-fird.onrender.com/api/trips/${id}`,
                 trip
             );
 

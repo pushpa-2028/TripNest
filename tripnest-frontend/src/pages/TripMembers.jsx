@@ -32,7 +32,7 @@ function TripMembers() {
         try {
 
             const response = await axios.get(
-                `http://https://tripnest-fird.onrender.com/api/trip-members/trip/${id}`
+                `https://tripnest-fird.onrender.com/api/trip-members/trip/${id}`
             );
 
             setMembers(response.data);
@@ -52,7 +52,7 @@ function TripMembers() {
         try {
 
             await axios.post(
-                "http://https://tripnest-fird.onrender.com/api/trip-members",
+                "https://tripnest-fird.onrender.com/api/trip-members",
                 {
                     tripId: id,
                     memberName,
@@ -84,7 +84,7 @@ function TripMembers() {
         try {
 
             await axios.delete(
-                `http://https://tripnest-fird.onrender.com/api/trip-members/${memberId}`
+                `https://tripnest-fird.onrender.com/api/trip-members/${memberId}`
             );
 
             fetchMembers();

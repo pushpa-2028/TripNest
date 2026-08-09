@@ -37,7 +37,7 @@ function Expenses() {
         try {
 
             const response = await axios.get(
-                `http://https://tripnest-fird.onrender.com/api/expenses/trip/${id}`
+                `https://tripnest-fird.onrender.com/api/expenses/trip/${id}`
             );
 
             setExpenses(response.data);
@@ -51,7 +51,7 @@ function Expenses() {
         try {
 
             const response = await axios.get(
-                `http://https://tripnest-fird.onrender.com/api/expenses/summary/${id}`
+                `https://tripnest-fird.onrender.com/api/expenses/summary/${id}`
             );
 
             setSummary(response.data);
@@ -68,7 +68,7 @@ function Expenses() {
         try {
 
             await axios.delete(
-                `http://https://tripnest-fird.onrender.com/api/expenses/${expenseId}`
+                `https://tripnest-fird.onrender.com/api/expenses/${expenseId}`
             );
 
             fetchExpenses();

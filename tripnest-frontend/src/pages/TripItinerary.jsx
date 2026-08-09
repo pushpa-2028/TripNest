@@ -18,7 +18,7 @@ function TripItinerary() {
         try {
 
             const response = await axios.get(
-                `http://https://tripnest-fird.onrender.com/api/itineraries/trip/${id}`
+                `https://tripnest-fird.onrender.com/api/itineraries/trip/${id}`
             );
 
             setItineraries(response.data);

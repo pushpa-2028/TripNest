@@ -99,7 +99,7 @@ function CreateTrip() {
         try {
 
             await axios.post(
-                "http://https://tripnest-fird.onrender.com/api/trips",
+                "https://tripnest-fird.onrender.com/api/trips",
                 trip
             );
 

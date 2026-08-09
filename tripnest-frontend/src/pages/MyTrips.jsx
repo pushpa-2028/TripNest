@@ -29,7 +29,7 @@ function MyTrips() {
   const fetchTrips = async () => {
     try {
       const response = await axios.get(
-        "http://https://tripnest-fird.onrender.com/api/trips"
+        "https://tripnest-fird.onrender.com/api/trips"
       );
 
       setTrips(response.data);
@@ -63,7 +63,7 @@ function MyTrips() {
 
     try {
       await axios.delete(
-        `http://https://tripnest-fird.onrender.com/api/trips/${id}`
+        `https://tripnest-fird.onrender.com/api/trips/${id}`
       );
 
       fetchTrips();
