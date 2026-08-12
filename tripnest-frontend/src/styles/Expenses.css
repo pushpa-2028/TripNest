@@ -44,14 +44,13 @@
     border-radius: 18px;
     padding: 25px;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
-    transition: .3s;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
 }
-
 
 .summaryCard:hover {
     transform: translateY(-8px);
-    box-shadow: 0 18px 35px rgba(0,0,0,.15);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
 }
 
 .summaryIcon {
@@ -69,8 +68,9 @@
     font-weight: bold;
 }
 
-
-/* Card Colors */
+/* ===================================
+   CARD COLORS
+=================================== */
 
 .budgetCard {
     border-top: 5px solid #1565c0;
@@ -122,28 +122,31 @@
 }
 
 /* ===================================
-   BUTTON
+   ADD EXPENSE BUTTON
 =================================== */
 
-.addExpenseBtn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
+.addExpenseBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 
-    margin:0 auto 35px;
+    margin: 0 auto 35px;
 
-    border:none;
-    background:linear-gradient(135deg,#1565c0,#42a5f5);
-    color:white;
-    padding:14px 24px;
-    border-radius:10px;
-    cursor:pointer;
-    transition:.3s;
+    border: none;
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .addExpenseBtn:hover {
     transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(21, 101, 192, 0.25);
 }
 
 /* ===================================
@@ -152,7 +155,7 @@
 
 .expenseGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 25px;
 }
 
@@ -164,9 +167,9 @@
     background: white;
     border-radius: 18px;
     padding: 22px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     border-top: 5px solid #1565c0;
-    transition: .3s;
+    transition: 0.3s;
 
     display: flex;
     flex-direction: column;
@@ -174,8 +177,12 @@
 
 .expenseCardItem:hover {
     transform: translateY(-8px);
-    box-shadow: 0 18px 35px rgba(0,0,0,.15);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
 }
+
+/* ===================================
+   EXPENSE TOP
+=================================== */
 
 .expenseTop {
     display: flex;
@@ -190,12 +197,16 @@
 }
 
 .amountBadge {
-    background: linear-gradient(135deg,#1565c0,#42a5f5);
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
     color: white;
     padding: 8px 16px;
     border-radius: 25px;
     font-weight: bold;
 }
+
+/* ===================================
+   EXPENSE INFO
+=================================== */
 
 .expenseInfo p {
     display: flex;
@@ -216,24 +227,51 @@
     overflow: hidden;
 }
 
+/* ===================================
+   ACTION BUTTONS
+=================================== */
+
+.editExpenseBtn,
 .deleteExpenseBtn {
-    margin-top: auto;
+    flex: 1;
     border: none;
-    background: #e53935;
-    color: white;
     padding: 12px;
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
+
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    transition: .3s;
+
+    transition: 0.3s;
+}
+
+/* EDIT BUTTON */
+
+.editExpenseBtn {
+    background: #1565c0;
+    color: white;
+}
+
+.editExpenseBtn:hover {
+    background: #0d47a1;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(21, 101, 192, 0.25);
+}
+
+/* DELETE BUTTON */
+
+.deleteExpenseBtn {
+    background: #e53935;
+    color: white;
 }
 
 .deleteExpenseBtn:hover {
     background: #c62828;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(229, 57, 53, 0.25);
 }
 
 /* ===================================
@@ -241,15 +279,15 @@
 =================================== */
 
 .emptyExpense {
-    grid-column: 1/-1;
+    grid-column: 1 / -1;
     background: white;
     border-radius: 18px;
     padding: 60px;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-.emptyExpense h2 {
+.emptyExpense h3 {
     color: #1565c0;
     margin-bottom: 10px;
 }
@@ -262,7 +300,7 @@
    RESPONSIVE
 =================================== */
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
 
     .expensesPage {
         padding: 95px 18px 20px;
@@ -282,4 +320,32 @@
         gap: 12px;
     }
 
+    .amountBadge {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .summaryGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .expenseGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .expenseCardItem {
+        padding: 18px;
+    }
+
+    .expenseTop h2 {
+        font-size: 21px;
+    }
+
+    .editExpenseBtn,
+    .deleteExpenseBtn {
+        font-size: 14px;
+        padding: 11px 8px;
+    }
 }

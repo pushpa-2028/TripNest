@@ -19,7 +19,9 @@ import Expenses from "./pages/Expenses";
 import AddExpense from "./pages/AddExpense";
 import TripMembers from "./pages/TripMembers";
 import Documents from "./pages/Documents";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import EditExpense from "./pages/EditExpense";
 
 import "./styles/App.css";
 
@@ -34,30 +36,70 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
+        {/* Profile */}
+        <Route path="/profile" element={<Profile />} />
+
+        {/* Trips */}
         <Route path="/create-trip" element={<CreateTrip />} />
         <Route path="/my-trips" element={<MyTrips />} />
         <Route path="/edit-trip/:id" element={<EditTrip />} />
 
-        <Route path="/trip/:id/itinerary" element={<TripItinerary />} />
-        <Route path="/trip/:id/add-itinerary" element={<AddItinerary />} />
+        {/* Itinerary */}
+        <Route
+          path="/trip/:id/itinerary"
+          element={<TripItinerary />}
+        />
+
+        <Route
+          path="/trip/:id/add-itinerary"
+          element={<AddItinerary />}
+        />
 
         {/* Expense */}
-        <Route path="/trip/:id/expenses" element={<Expenses />} />
-        <Route path="/trip/:id/add-expense" element={<AddExpense />} />
+        <Route
+          path="/trip/:id/expenses"
+          element={<Expenses />}
+        />
+
+        <Route
+          path="/trip/:id/add-expense"
+          element={<AddExpense />}
+        />
 
         {/* Members */}
-        <Route path="/trip/:id/members" element={<TripMembers />} />
+        <Route
+          path="/trip/:id/members"
+          element={<TripMembers />}
+        />
 
         {/* Documents */}
-        <Route path="/trip/:id/documents" element={<Documents />} />
+        <Route
+          path="/trip/:id/documents"
+          element={<Documents />}
+        />
 
-        <Route path="/add-destination" element={<AddDestination />} />
-        <Route path="/destinations" element={<Destinations />} />
+        {/* Destinations */}
+        <Route
+          path="/add-destination"
+          element={<AddDestination />}
+        />
+
+        <Route
+          path="/destinations"
+          element={<Destinations />}
+        />
+
         <Route
           path="/edit-destination/:id"
           element={<EditDestination />}
         />
 
+        <Route
+  path="/edit-expense/:id"
+  element={<EditExpense />}
+/>
+
+        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 
