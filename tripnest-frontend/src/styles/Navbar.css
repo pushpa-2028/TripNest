@@ -1,248 +1,646 @@
 /* ==========================================
-                NAVBAR
+   TRIPNEST NAVBAR
 ========================================== */
 
-.navbar{
-
-    position:sticky;
-
-    top:0;
-
-    z-index:1000;
-
-    width:100%;
-
-    background:rgba(255,255,255,.88);
-
-    backdrop-filter:blur(15px);
-
-    -webkit-backdrop-filter:blur(15px);
-
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
+
 
 /* ==========================================
-            NAV CONTAINER
+   NAV CONTAINER
 ========================================== */
 
-.nav-container{
+.nav-container {
+    width: 92%;
+    max-width: 1400px;
+    height: 78px;
+    margin: auto;
 
-    width:92%;
-
-    max-width:1400px;
-
-    margin:auto;
-
-    height:78px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
 }
+
 
 /* ==========================================
-               LOGO
+   LOGO
 ========================================== */
 
-.logo{
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    text-decoration:none;
-
+    text-decoration: none;
+    flex-shrink: 0;
 }
 
-.logo-icon{
-
-    font-size:38px;
-
+.logo-icon {
+    font-size: 38px;
+    line-height: 1;
 }
 
-.logo-text h2{
+.logo-text h2 {
+    margin: 0;
 
-    color:#2563eb;
-
-    font-size:28px;
-
-    margin:0;
-
-    font-weight:700;
-
-    letter-spacing:.5px;
-
+    color: #2563eb;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
-.logo-text small{
-
-    color:#64748b;
-
-    font-size:12px;
-
-    letter-spacing:1px;
-
+.logo-text small {
+    color: #64748b;
+    font-size: 12px;
+    letter-spacing: 1px;
 }
+
 
 /* ==========================================
-            NAV LINKS
+   DESKTOP NAVIGATION
 ========================================== */
 
-.nav-links{
-
-    display:flex;
-
-    gap:28px;
-
-    list-style:none;
-
-    align-items:center;
-
+.desktop-nav {
+    display: flex;
+    align-items: center;
 }
 
-.nav-links a{
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
 
-    color:#334155;
-
-    font-size:16px;
-
-    font-weight:500;
-
-    padding:8px 15px;
-
-    border-radius:10px;
-
-    transition:.3s;
-
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.nav-links a:hover{
-
-    color:#2563eb;
-
-    background:#eff6ff;
-
+.nav-links li {
+    list-style: none;
 }
 
-.active{
+.nav-links a {
+    display: block;
 
-    background:#2563eb;
+    padding: 10px 15px;
 
-    color:white !important;
+    color: #334155;
+    text-decoration: none;
 
+    font-size: 16px;
+    font-weight: 500;
+
+    border-radius: 12px;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
 }
+
+.nav-links a:hover {
+    color: #2563eb;
+    background: #eff6ff;
+    transform: translateY(-1px);
+}
+
+.nav-links a.active {
+    background: #2563eb;
+    color: #ffffff !important;
+}
+
 
 /* ==========================================
-            BUTTONS
+   DESKTOP AUTH BUTTONS
 ========================================== */
 
-.nav-buttons{
-
-    display:flex;
-
-    gap:15px;
-
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
 }
 
-.login-btn-nav{
+.login-btn-nav,
+.register-btn-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    padding:11px 24px;
+    min-width: 100px;
 
-    border:2px solid #2563eb;
+    padding: 11px 22px;
 
-    border-radius:10px;
+    border-radius: 12px;
 
-    color:#2563eb;
+    text-decoration: none;
 
-    font-weight:600;
+    font-weight: 600;
 
-    transition:.3s;
-
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.login-btn-nav:hover{
-
-    background:#2563eb;
-
-    color:white;
-
+.login-btn-nav {
+    color: #2563eb;
+    background: #ffffff;
+    border: 2px solid #2563eb;
 }
 
-.register-btn-nav{
-
-    padding:11px 24px;
-
-    background:#2563eb;
-
-    color:white;
-
-    border-radius:10px;
-
-    font-weight:600;
-
-    transition:.3s;
-
+.login-btn-nav:hover {
+    color: #ffffff;
+    background: #2563eb;
+    transform: translateY(-2px);
 }
 
-.register-btn-nav:hover{
-
-    background:#1d4ed8;
-
-    transform:translateY(-2px);
-
-    box-shadow:0 10px 20px rgba(37,99,235,.25);
-
+.register-btn-nav {
+    color: #ffffff;
+    background: #2563eb;
+    border: 2px solid #2563eb;
 }
+
+.register-btn-nav:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+}
+
 
 /* ==========================================
-            RESPONSIVE
+   MOBILE MENU BUTTON
 ========================================== */
 
-@media(max-width:1100px){
+.mobile-menu-btn {
+    display: none;
 
-    .nav-links{
+    width: 52px;
+    height: 52px;
 
-        display:none;
+    padding: 0;
 
-    }
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
 
+    background: #ffffff;
+
+    cursor: pointer;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+
+    transition:
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
 }
 
-@media(max-width:768px){
+.mobile-menu-btn:hover {
+    background: #eff6ff;
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.15);
+}
 
-    .nav-container{
+.mobile-menu-btn:active {
+    transform: scale(0.95);
+}
 
-        width:95%;
+.mobile-menu-btn span {
+    display: block;
 
-        height:70px;
+    width: 24px;
+    height: 3px;
 
+    background: #2563eb;
+
+    border-radius: 10px;
+
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+
+/* Hamburger -> X */
+
+.mobile-menu-btn.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-btn.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
+/* ==========================================
+   MOBILE MENU
+========================================== */
+
+.mobile-menu {
+    display: none;
+
+    width: 100%;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e2e8f0;
+
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+.mobile-nav-links {
+    list-style: none;
+
+    padding: 12px 20px;
+    margin: 0;
+}
+
+.mobile-nav-links li {
+    margin: 4px 0;
+}
+
+.mobile-nav-links a {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    color: #334155;
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    border-radius: 12px;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.mobile-nav-links a span {
+    width: 28px;
+
+    font-size: 20px;
+
+    text-align: center;
+}
+
+.mobile-nav-links a:hover {
+    color: #2563eb;
+    background: #eff6ff;
+    transform: translateX(3px);
+}
+
+.mobile-nav-links a.mobile-active {
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.2);
+}
+
+
+/* ==========================================
+   MOBILE AUTH BUTTONS
+========================================== */
+
+.mobile-auth-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    padding: 10px 20px 20px;
+}
+
+.mobile-login-btn,
+.mobile-register-btn {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 46px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.mobile-login-btn {
+    color: #2563eb;
+
+    background: #ffffff;
+
+    border: 2px solid #2563eb;
+}
+
+.mobile-login-btn:hover {
+    color: #ffffff;
+    background: #2563eb;
+}
+
+.mobile-register-btn {
+    color: #ffffff;
+
+    background: #2563eb;
+
+    border: 2px solid #2563eb;
+}
+
+.mobile-register-btn:hover {
+    background: #1d4ed8;
+}
+
+.mobile-login-btn:active,
+.mobile-register-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* ==========================================
+   TABLET / MOBILE
+========================================== */
+
+@media (max-width: 1100px) {
+
+    .nav-container {
+        width: 94%;
     }
 
-    .logo-text small{
-
-        display:none;
-
+    .desktop-nav,
+    .desktop-buttons {
+        display: none;
     }
 
-    .logo-text h2{
-
-        font-size:24px;
-
+    .mobile-menu-btn {
+        display: flex;
     }
 
-    .login-btn-nav,
-    .register-btn-nav{
+    .mobile-menu {
+        display: block;
 
-        padding:10px 18px;
+        max-height: 0;
+        overflow: hidden;
 
-        font-size:14px;
+        opacity: 0;
 
+        transition:
+            max-height 0.35s ease,
+            opacity 0.25s ease;
     }
+
+    .mobile-menu.mobile-menu-open {
+        max-height: 600px;
+        opacity: 1;
+    }
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 768px) {
+
+    .nav-container {
+        width: 94%;
+        height: 70px;
+    }
+
+    .logo {
+        gap: 9px;
+    }
+
+    .logo-icon {
+        font-size: 32px;
+    }
+
+    .logo-text h2 {
+        font-size: 24px;
+    }
+
+    .logo-text small {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+    .nav-container {
+        width: 92%;
+        height: 66px;
+    }
+
+    .logo-icon {
+        font-size: 29px;
+    }
+
+    .logo-text h2 {
+        font-size: 22px;
+    }
+
+    .mobile-menu-btn {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+    }
+
+    .mobile-nav-links {
+        padding: 10px 15px;
+    }
+
+    .mobile-nav-links a {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .mobile-auth-buttons {
+        padding: 8px 15px 18px;
+    }
+}
+/* =========================================
+   NOTIFICATION BELL
+========================================= */
+
+.notification-bell {
+  position: relative;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #dbeafe;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.notification-bell:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.notification-bell-active {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+
+.bell-icon {
+  font-size: 21px;
+  line-height: 1;
+}
+
+.notification-badge {
+  position: absolute;
+
+  top: -7px;
+  right: -7px;
+
+  min-width: 20px;
+  height: 20px;
+
+  padding: 0 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ef4444;
+  color: white;
+
+  border: 2px solid white;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   MOBILE NOTIFICATION
+========================================= */
+
+.mobile-notification-link {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px 15px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #172554;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.mobile-notification-link:hover {
+  background: #eff6ff;
+}
+
+.mobile-notification-badge {
+  margin-left: auto;
+
+  min-width: 22px;
+  height: 22px;
+
+  padding: 0 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ef4444;
+  color: white;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .notification-bell {
+    display: none;
+  }
 
 }

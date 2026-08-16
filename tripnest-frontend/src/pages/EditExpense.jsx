@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
+
 import "../styles/AddExpense.css";
 
 function EditExpense() {
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -18,41 +20,74 @@ function EditExpense() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
+
   // =====================================
   // FETCH EXPENSE
   // =====================================
 
   useEffect(() => {
+
     const fetchExpense = async () => {
+
       try {
-        const response = await axios.get(
-          `https://tripnest-fird.onrender.com/api/expenses/${id}`
+
+        const response = await API.get(
+          `/expenses/${id}`
         );
 
         setExpense({
-          expenseName: response.data.expenseName || "",
-          category: response.data.category || "",
-          amount: response.data.amount || "",
-          expenseDate: response.data.expenseDate || "",
-          notes: response.data.notes || ""
+          expenseName:
+            response.data.expenseName || "",
+
+          category:
+            response.data.category || "",
+
+          amount:
+            response.data.amount || "",
+
+          expenseDate:
+            response.data.expenseDate || "",
+
+          notes:
+            response.data.notes || ""
         });
 
       } catch (error) {
-        console.log(error);
-        setError("Failed to load expense.");
+
+        console.log(
+          "Fetch expense error:",
+          error
+        );
+
+        if (error.response) {
+
+          console.log(
+            "Server response:",
+            error.response.data
+          );
+        }
+
+        setError(
+          "Failed to load expense."
+        );
+
       } finally {
+
         setLoading(false);
       }
     };
 
     fetchExpense();
+
   }, [id]);
+
 
   // =====================================
   // HANDLE INPUT CHANGE
   // =====================================
 
   const handleChange = (e) => {
+
     setExpense({
       ...expense,
       [e.target.name]: e.target.value
@@ -61,11 +96,13 @@ function EditExpense() {
     setError("");
   };
 
+
   // =====================================
   // VALIDATE FORM
   // =====================================
 
   const validateForm = () => {
+
     if (!expense.expenseName.trim()) {
       return "Please enter an expense name.";
     }
@@ -74,7 +111,10 @@ function EditExpense() {
       return "Please enter an expense category.";
     }
 
-    if (!expense.amount || Number(expense.amount) <= 0) {
+    if (
+      !expense.amount ||
+      Number(expense.amount) <= 0
+    ) {
       return "Expense amount must be greater than ₹0.";
     }
 
@@ -85,32 +125,55 @@ function EditExpense() {
     return "";
   };
 
+
   // =====================================
   // UPDATE EXPENSE
   // =====================================
 
   const updateExpense = async (e) => {
+
     e.preventDefault();
 
-    const validationError = validateForm();
+    const validationError =
+      validateForm();
 
     if (validationError) {
+
       setError(validationError);
+
       return;
     }
 
     try {
-      await axios.put(
-        `https://tripnest-fird.onrender.com/api/expenses/${id}`,
-        expense
+
+      await API.put(
+        `/expenses/${id}`,
+        {
+          ...expense,
+          amount: Number(expense.amount)
+        }
       );
 
-      alert("Expense Updated Successfully!");
+      alert(
+        "Expense Updated Successfully!"
+      );
 
       navigate(-1);
 
     } catch (error) {
-      console.log(error);
+
+      console.log(
+        "Update expense error:",
+        error
+      );
+
+      if (error.response) {
+
+        console.log(
+          "Server response:",
+          error.response.data
+        );
+      }
 
       setError(
         "Failed to update expense. Please try again."
@@ -118,25 +181,36 @@ function EditExpense() {
     }
   };
 
+
   // =====================================
   // LOADING
   // =====================================
 
   if (loading) {
+
     return (
+
       <div className="add-expense-container">
+
         <div className="add-expense-card">
-          <h2>Loading Expense...</h2>
+
+          <h2>
+            Loading Expense...
+          </h2>
+
         </div>
+
       </div>
     );
   }
+
 
   // =====================================
   // PAGE
   // =====================================
 
   return (
+
     <div className="add-expense-container">
 
       <div className="add-expense-card">
@@ -145,9 +219,11 @@ function EditExpense() {
           Edit Expense
         </h2>
 
+
         {/* ERROR */}
 
         {error && (
+
           <div
             style={{
               background: "#ffebee",
@@ -160,9 +236,12 @@ function EditExpense() {
           >
             {error}
           </div>
+
         )}
 
+
         <form onSubmit={updateExpense}>
+
 
           {/* EXPENSE NAME */}
 
@@ -174,6 +253,7 @@ function EditExpense() {
             onChange={handleChange}
           />
 
+
           {/* CATEGORY */}
 
           <input
@@ -183,6 +263,7 @@ function EditExpense() {
             value={expense.category}
             onChange={handleChange}
           />
+
 
           {/* AMOUNT */}
 
@@ -194,6 +275,7 @@ function EditExpense() {
             onChange={handleChange}
             min="1"
           />
+
 
           {/* DATE */}
 
@@ -208,6 +290,7 @@ function EditExpense() {
             onChange={handleChange}
           />
 
+
           {/* NOTES */}
 
           <textarea
@@ -218,11 +301,13 @@ function EditExpense() {
             onChange={handleChange}
           />
 
+
           {/* UPDATE */}
 
           <button type="submit">
             Update Expense
           </button>
+
 
           {/* CANCEL */}
 

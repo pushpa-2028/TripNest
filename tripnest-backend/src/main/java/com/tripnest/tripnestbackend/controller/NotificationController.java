@@ -17,23 +17,51 @@ public class NotificationController {
         this.service = service;
     }
 
+    // Create notification
     @PostMapping
-    public Notification addNotification(@RequestBody Notification notification) {
+    public Notification addNotification(
+            @RequestBody Notification notification
+    ) {
         return service.saveNotification(notification);
     }
 
-    @GetMapping
-    public List<Notification> getNotifications() {
-        return service.getAllNotifications();
+    // Get notifications for a specific user
+    @GetMapping("/user/{userId}")
+    public List<Notification> getUserNotifications(
+            @PathVariable Long userId
+    ) {
+        return service.getUserNotifications(userId);
     }
 
+    // Get unread notification count
+    @GetMapping("/user/{userId}/unread-count")
+    public long getUnreadCount(
+            @PathVariable Long userId
+    ) {
+        return service.getUnreadCount(userId);
+    }
+
+    // Mark one notification as read
     @PutMapping("/{id}/read")
-    public Notification markAsRead(@PathVariable Long id) {
+    public Notification markAsRead(
+            @PathVariable Long id
+    ) {
         return service.markAsRead(id);
     }
 
+    // Mark all notifications as read
+    @PutMapping("/user/{userId}/read-all")
+    public void markAllAsRead(
+            @PathVariable Long userId
+    ) {
+        service.markAllAsRead(userId);
+    }
+
+    // Delete notification
     @DeleteMapping("/{id}")
-    public void deleteNotification(@PathVariable Long id) {
+    public void deleteNotification(
+            @PathVariable Long id
+    ) {
         service.deleteNotification(id);
     }
 }

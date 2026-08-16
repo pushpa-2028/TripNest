@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../services/api";
 
 import {
   FaPlaneDeparture,
@@ -30,181 +30,237 @@ import {
 import "../styles/Dashboard.css";
 
 function Dashboard() {
-
   const navigate = useNavigate();
 
-  const [trips, setTrips] = useState([]);
-  const [expenses, setExpenses] = useState([]);
+  // =====================================
+  // DASHBOARD DATA
+  // =====================================
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   // =====================================
   // FETCH DASHBOARD DATA
+  // ONE API REQUEST ONLY
   // =====================================
 
-  const fetchDashboardData = async () => {
+  useEffect(() => {
+    let isMounted = true;
 
-    try {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-      const tripResponse = await axios.get(
-        "https://tripnest-fird.onrender.com/api/trips"
-      );
+        const response = await API.get("/dashboard");
+        if (isMounted) {
+          setDashboardData(response.data);
+        }
+      } catch (err) {
+        console.error("Dashboard API error:", err);
 
-      const tripData = tripResponse.data || [];
-
-      setTrips(tripData);
-
-      if (tripData.length === 0) {
-        setExpenses([]);
-        return;
+        if (isMounted) {
+          setError(
+            "Unable to load dashboard data. Please try again."
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
+    };
 
-      const expenseRequests = tripData.map((trip) =>
-        axios.get(
-          `https://tripnest-fird.onrender.com/api/expenses/trip/${trip.id}`
-        )
-      );
+    fetchDashboardData();
 
-      const expenseResponses = await Promise.all(
-        expenseRequests
-      );
-
-      const allExpenses = expenseResponses.flatMap(
-        (response) => response.data || []
-      );
-
-      setExpenses(allExpenses);
-
-    } catch (error) {
-
-      console.log(
-        "Dashboard data error:",
-        error
-      );
-
-    }
-  };
-
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // =====================================
-  // DASHBOARD CALCULATIONS
+  // LOADING SCREEN
   // =====================================
 
-  const today = new Date();
+  if (loading) {
+    return (
+      <div className="dashboard">
 
-  const totalTrips = trips.length;
+        <div className="dashboard-header">
+          <h1>TripNest Dashboard</h1>
 
-  const totalDestinations = new Set(
-    trips.map((trip) => trip.destination)
-  ).size;
+          <p>
+            Loading your travel dashboard...
+          </p>
+        </div>
 
-  const upcomingTrips = trips.filter(
-    (trip) => new Date(trip.startDate) >= today
-  ).length;
+        <div className="dashboard-cards">
 
-  const totalBudget = trips.reduce(
-    (sum, trip) =>
-      sum + Number(trip.budget || 0),
-    0
-  );
+          <div className="dashboard-card trips-card">
+            <div className="card-icon">
+              <FaPlaneDeparture />
+            </div>
 
-  const totalExpenses = expenses.reduce(
-    (sum, expense) =>
-      sum + Number(expense.amount || 0),
-    0
-  );
+            <div>
+              <h2>...</h2>
+              <p>Total Trips</p>
+            </div>
+          </div>
+
+          <div className="dashboard-card destination-card">
+            <div className="card-icon">
+              <FaMapMarkerAlt />
+            </div>
+
+            <div>
+              <h2>...</h2>
+              <p>Destinations</p>
+            </div>
+          </div>
+
+          <div className="dashboard-card upcoming-card">
+            <div className="card-icon">
+              <FaCalendarAlt />
+            </div>
+
+            <div>
+              <h2>...</h2>
+              <p>Upcoming Trips</p>
+            </div>
+          </div>
+
+          <div className="dashboard-card budget-card">
+            <div className="card-icon">
+              <FaWallet />
+            </div>
+
+            <div>
+              <h2>...</h2>
+              <p>Total Budget</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    );
+  }
+
+  // =====================================
+  // ERROR SCREEN
+  // =====================================
+
+  if (error || !dashboardData) {
+    return (
+      <div className="dashboard">
+
+        <div className="dashboard-header">
+          <h1>TripNest Dashboard</h1>
+
+          <p>
+            {error || "No dashboard data available."}
+          </p>
+        </div>
+
+        <div
+          style={{
+            textAlign: "center",
+            padding: "40px"
+          }}
+        >
+          <button
+            className="action-btn"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </button>
+        </div>
+
+      </div>
+    );
+  }
+
+  // =====================================
+  // GET DATA FROM BACKEND
+  // =====================================
+
+  const totalTrips =
+    dashboardData.totalTrips || 0;
+
+  const totalDestinations =
+    dashboardData.totalDestinations || 0;
+
+  const upcomingTrips =
+    dashboardData.upcomingTrips || 0;
+
+  const totalBudget =
+    Number(dashboardData.totalBudget || 0);
+
+  const totalExpenses =
+    Number(dashboardData.totalExpenses || 0);
 
   const remainingBudget =
-    totalBudget - totalExpenses;
+    Number(dashboardData.remainingBudget || 0);
 
   const budgetUsedPercentage =
-    totalBudget > 0
-      ? (totalExpenses / totalBudget) * 100
-      : 0;
+    Number(
+      dashboardData.budgetUsedPercentage || 0
+    );
 
+  const trips =
+    dashboardData.trips || [];
 
-  // =====================================
-  // DASHBOARD ANALYTICS DATA
-  // =====================================
-
-  const chartData = [
-    {
-      name: "Trips",
-      value: totalTrips
-    },
-    {
-      name: "Destinations",
-      value: totalDestinations
-    },
-    {
-      name: "Upcoming",
-      value: upcomingTrips
-    }
-  ];
-
+  const categoryTotals =
+    dashboardData.categoryTotals || {};
 
   // =====================================
-  // BUDGET REPORT DATA
+  // DASHBOARD ANALYTICS
   // =====================================
 
-  const budgetChartData = [
-    {
-      name: "Budget",
-      amount: totalBudget
-    },
-    {
-      name: "Expenses",
-      amount: totalExpenses
-    },
-    {
-      name: "Remaining",
-      amount: remainingBudget
-    }
-  ];
+  const completedTrips = Math.max(
+  totalTrips - upcomingTrips,
+  0
+);
 
+const tripStatusData = [
+  {
+    name: "Completed",
+    value: completedTrips
+  },
+  {
+    name: "Upcoming",
+    value: upcomingTrips
+  }
+];
 
   // =====================================
-  // EXPENSE CATEGORY DATA
+  // BUDGET REPORT
   // =====================================
 
-  const categoryTotals = expenses.reduce(
-    (result, expense) => {
-
-      const category =
-        expense.category || "Other";
-
-      const amount =
-        Number(expense.amount || 0);
-
-      if (result[category]) {
-
-        result[category] += amount;
-
-      } else {
-
-        result[category] = amount;
-
-      }
-
-      return result;
-
-    },
-    {}
-  );
-
+ const budgetChartData = [
+  {
+    name: "Budget",
+    expenses: totalExpenses,
+    remaining: remainingBudget
+  }
+];
+  // =====================================
+  // EXPENSE CATEGORY REPORT
+  // =====================================
 
   const categoryChartData =
     Object.entries(categoryTotals).map(
       ([category, amount]) => ({
         name: category,
-        value: amount
+        value: Number(amount || 0)
       })
     );
 
+  // =====================================
+  // PIE CHART COLORS
+  // =====================================
 
-  // Pie Chart Colors
   const COLORS = [
     "#1565c0",
     "#009688",
@@ -216,226 +272,328 @@ function Dashboard() {
     "#f4511e"
   ];
 
+  // =====================================
+  // MAIN DASHBOARD
+  // =====================================
 
   return (
-
     <div className="dashboard">
 
+      {/* =====================================
+    DASHBOARD HEADER
+===================================== */}
+
+<div className="dashboard-header">
+
+  <div className="dashboard-header-content">
+
+    <div className="dashboard-header-text">
+
+      <span className="dashboard-eyebrow">
+        YOUR TRAVEL SPACE
+      </span>
+
+      <h1>
+        TripNest Dashboard
+      </h1>
+
+      <p>
+        Plan smarter, track your journeys,
+        and keep every travel detail in one place.
+      </p>
+
+    </div>
+
+    <div className="dashboard-header-icon">
+      <FaPlaneDeparture />
+    </div>
+
+  </div>
+
+</div>
+
+
+     {/* =====================================
+    STATISTICS CARDS
+===================================== */}
+
+<div className="dashboard-cards">
+
+  {/* TOTAL TRIPS */}
+
+  <div className="dashboard-card trips-card">
+
+    <div className="card-icon">
+      <FaPlaneDeparture />
+    </div>
+
+    <div className="card-content">
+
+      <p className="card-label">
+        Total Trips
+      </p>
+
+      <h2>
+        {totalTrips}
+      </h2>
+
+      <small>
+        All your journeys
+      </small>
+
+    </div>
+
+  </div>
+
+
+  {/* DESTINATIONS */}
+
+  <div className="dashboard-card destination-card">
+
+    <div className="card-icon">
+      <FaMapMarkerAlt />
+    </div>
+
+    <div className="card-content">
+
+      <p className="card-label">
+        Destinations
+      </p>
+
+      <h2>
+        {totalDestinations}
+      </h2>
+
+      <small>
+        Places you've explored
+      </small>
+
+    </div>
+
+  </div>
+
+
+  {/* UPCOMING TRIPS */}
+
+  <div className="dashboard-card upcoming-card">
+
+    <div className="card-icon">
+      <FaCalendarAlt />
+    </div>
+
+    <div className="card-content">
+
+      <p className="card-label">
+        Upcoming Trips
+      </p>
+
+      <h2>
+        {upcomingTrips}
+      </h2>
+
+      <small>
+        Trips coming soon
+      </small>
+
+    </div>
+
+  </div>
+
+
+  {/* TOTAL BUDGET */}
+
+  <div className="dashboard-card budget-card">
+
+    <div className="card-icon">
+      <FaWallet />
+    </div>
+
+    <div className="card-content">
+
+      <p className="card-label">
+        Total Budget
+      </p>
+
+      <h2>
+        ₹{totalBudget.toLocaleString()}
+      </h2>
+
+      <small>
+        Planned travel budget
+      </small>
+
+    </div>
+
+  </div>
+
+</div>
+
 
       {/* =====================================
-          HEADER
-      ===================================== */}
+    QUICK ACTIONS
+===================================== */}
 
-      <div className="dashboard-header">
+<div className="quick-actions">
 
-        <h1>
-          TripNest Dashboard
-        </h1>
+  <div className="quick-actions-header">
 
-        <p>
-          Welcome back! Manage your trips,
-          budgets, destinations and travel
-          plans from one place.
-        </p>
+    <div>
+      <h2>Quick Actions</h2>
+
+      <p>
+        Manage your travel plans quickly
+      </p>
+    </div>
+
+  </div>
+
+
+  <div className="action-grid">
+
+    {/* CREATE TRIP */}
+
+    <button
+      className="action-btn create-action"
+      onClick={() =>
+        navigate("/create-trip")
+      }
+    >
+
+      <div className="action-icon">
+        <FaPlusCircle />
+      </div>
+
+      <div className="action-content">
+
+        <strong>
+          Create Trip
+        </strong>
+
+        <span>
+          Plan a new journey
+        </span>
 
       </div>
 
+      <span className="action-arrow">
+        →
+      </span>
 
-      {/* =====================================
-          STATISTICS CARDS
-      ===================================== */}
-
-      <div className="dashboard-cards">
-
-
-        {/* TOTAL TRIPS */}
-
-        <div className="dashboard-card trips-card">
-
-          <div className="card-icon">
-            <FaPlaneDeparture />
-          </div>
-
-          <div>
-
-            <h2>
-              {totalTrips}
-            </h2>
-
-            <p>
-              Total Trips
-            </p>
-
-          </div>
-
-        </div>
+    </button>
 
 
-        {/* DESTINATIONS */}
+    {/* MY TRIPS */}
 
-        <div className="dashboard-card destination-card">
+    <button
+      className="action-btn trips-action"
+      onClick={() =>
+        navigate("/my-trips")
+      }
+    >
 
-          <div className="card-icon">
-            <FaMapMarkerAlt />
-          </div>
+      <div className="action-icon">
+        <FaSuitcase />
+      </div>
 
-          <div>
+      <div className="action-content">
 
-            <h2>
-              {totalDestinations}
-            </h2>
+        <strong>
+          My Trips
+        </strong>
 
-            <p>
-              Destinations
-            </p>
-
-          </div>
-
-        </div>
-
-
-        {/* UPCOMING TRIPS */}
-
-        <div className="dashboard-card upcoming-card">
-
-          <div className="card-icon">
-            <FaCalendarAlt />
-          </div>
-
-          <div>
-
-            <h2>
-              {upcomingTrips}
-            </h2>
-
-            <p>
-              Upcoming Trips
-            </p>
-
-          </div>
-
-        </div>
-
-
-        {/* TOTAL BUDGET */}
-
-        <div className="dashboard-card budget-card">
-
-          <div className="card-icon">
-            <FaWallet />
-          </div>
-
-          <div>
-
-            <h2>
-              ₹{totalBudget.toLocaleString()}
-            </h2>
-
-            <p>
-              Total Budget
-            </p>
-
-          </div>
-
-        </div>
+        <span>
+          View your journeys
+        </span>
 
       </div>
 
+      <span className="action-arrow">
+        →
+      </span>
 
-      {/* =====================================
-          QUICK ACTIONS
-      ===================================== */}
-
-      <div className="quick-actions">
-
-        <h2>
-          Quick Actions
-        </h2>
-
-        <div className="action-grid">
+    </button>
 
 
-          <button
-            className="action-btn"
-            onClick={() =>
-              navigate("/create-trip")
-            }
-          >
+    {/* DESTINATIONS */}
 
-            <FaPlusCircle />
+    <button
+      className="action-btn destinations-action"
+      onClick={() =>
+        navigate("/destinations")
+      }
+    >
 
-            <span>
-              Create Trip
-            </span>
+      <div className="action-icon">
+        <FaGlobe />
+      </div>
 
-          </button>
+      <div className="action-content">
 
+        <strong>
+          Destinations
+        </strong>
 
-          <button
-            className="action-btn"
-            onClick={() =>
-              navigate("/my-trips")
-            }
-          >
-
-            <FaSuitcase />
-
-            <span>
-              My Trips
-            </span>
-
-          </button>
-
-
-          <button
-            className="action-btn"
-            onClick={() =>
-              navigate("/destinations")
-            }
-          >
-
-            <FaGlobe />
-
-            <span>
-              Destinations
-            </span>
-
-          </button>
-
-
-          <button
-            className="action-btn"
-
-            onClick={() => {
-
-              if (trips.length > 0) {
-
-                navigate(
-                  `/trip/${trips[0].id}/expenses`
-                );
-
-              } else {
-
-                alert(
-                  "Please create a trip first."
-                );
-
-              }
-
-            }}
-          >
-
-            <FaMoneyBillWave />
-
-            <span>
-              Expenses
-            </span>
-
-          </button>
-
-        </div>
+        <span>
+          Explore new places
+        </span>
 
       </div>
+
+      <span className="action-arrow">
+        →
+      </span>
+
+    </button>
+
+
+    {/* EXPENSES */}
+
+    <button
+      className="action-btn expenses-action"
+      onClick={() => {
+
+        if (trips.length > 0) {
+
+          navigate(
+            `/trip/${trips[0].id}/expenses`
+          );
+
+        } else {
+
+          alert(
+            "Please create a trip first."
+          );
+
+        }
+
+      }}
+    >
+
+      <div className="action-icon">
+        <FaMoneyBillWave />
+      </div>
+
+      <div className="action-content">
+
+        <strong>
+          Expenses
+        </strong>
+
+        <span>
+          Track your spending
+        </span>
+
+      </div>
+
+      <span className="action-arrow">
+        →
+      </span>
+
+    </button>
+
+  </div>
+
+</div>
 
 
       {/* =====================================
@@ -444,10 +602,107 @@ function Dashboard() {
 
       <div className="dashboard-grid">
 
-
         {/* DASHBOARD ANALYTICS */}
 
         <div className="analytics-card">
+          <ResponsiveContainer
+  width="100%"
+  height={300}
+>
+  <PieChart>
+
+    <Pie
+      data={tripStatusData}
+      dataKey="value"
+      nameKey="name"
+      cx="50%"
+      cy="50%"
+      innerRadius={75}
+      outerRadius={105}
+      paddingAngle={4}
+      stroke="none"
+    >
+
+      <Cell fill="#1565c0" />
+
+      <Cell fill="#42a5f5" />
+
+    </Pie>
+
+    <Tooltip
+      formatter={(value, name) => [
+        value,
+        name
+      ]}
+      contentStyle={{
+        borderRadius: "12px",
+        border: "1px solid #e5edf7",
+        boxShadow:
+          "0 8px 20px rgba(15, 23, 42, 0.10)"
+      }}
+    />
+
+    <text
+      x="50%"
+      y="47%"
+      textAnchor="middle"
+      dominantBaseline="middle"
+      fill="#111827"
+      fontSize="26"
+      fontWeight="700"
+    >
+      {totalTrips}
+    </text>
+
+    <text
+      x="50%"
+      y="56%"
+      textAnchor="middle"
+      dominantBaseline="middle"
+      fill="#6b7280"
+      fontSize="13"
+    >
+      Total Trips
+    </text>
+
+  </PieChart>
+</ResponsiveContainer>
+<div className="trip-status-summary">
+
+  <div className="trip-status-item">
+
+    <span className="status-dot completed-dot"></span>
+
+    <div>
+      <strong>
+        {completedTrips}
+      </strong>
+
+      <span>
+        Completed
+      </span>
+    </div>
+
+  </div>
+
+
+  <div className="trip-status-item">
+
+    <span className="status-dot upcoming-dot"></span>
+
+    <div>
+      <strong>
+        {upcomingTrips}
+      </strong>
+
+      <span>
+        Upcoming
+      </span>
+    </div>
+
+  </div>
+
+</div>
 
           <h2>
             Dashboard Analytics
@@ -459,28 +714,74 @@ function Dashboard() {
           >
 
             <BarChart
-              data={chartData}
-            >
+  data={tripStatusData}
+  margin={{
+    top: 10,
+    right: 20,
+    left: 0,
+    bottom: 10
+  }}
+>
+  <CartesianGrid
+  stroke="#d7dee8"
+  strokeDasharray="4 4"
+  vertical={false}
+/>
 
-              <CartesianGrid
-                strokeDasharray="3 3"
-              />
+  <XAxis
+  dataKey="name"
+  tick={{
+    fill: "#475569",
+    fontSize: 14
+  }}
+  axisLine={{
+    stroke: "#cbd5e1"
+  }}
+  tickLine={{
+    stroke: "#cbd5e1"
+  }}
+/>
 
-              <XAxis
-                dataKey="name"
-              />
+<YAxis
+  tick={{
+    fill: "#475569",
+    fontSize: 13
+  }}
+  axisLine={{
+    stroke: "#cbd5e1"
+  }}
+  tickLine={{
+    stroke: "#cbd5e1"
+  }}
+/>
 
-              <YAxis />
+  <Tooltip
+    cursor={{
+      fill: "rgba(21, 101, 192, 0.05)"
+    }}
+    contentStyle={{
+      borderRadius: "12px",
+      border: "1px solid #e5edf7",
+      boxShadow: "0 8px 20px rgba(15, 23, 42, 0.10)"
+    }}
+    formatter={(value) => [
+      value,
+      "Count"
+    ]}
+  />
 
-              <Tooltip />
-
-              <Bar
-                dataKey="value"
-                fill="#1565c0"
-                radius={[8, 8, 0, 0]}
-              />
-
-            </BarChart>
+  <Bar
+    dataKey="value"
+    fill="#1565c0"
+    radius={[
+      10,
+      10,
+      0,
+      0
+    ]}
+    barSize={70}
+  />
+</BarChart>
 
           </ResponsiveContainer>
 
@@ -488,94 +789,108 @@ function Dashboard() {
 
 
         {/* =====================================
-            RECENT TRIPS
-        ===================================== */}
+    RECENT TRIPS
+===================================== */}
 
-        <div className="recent-card">
+<div className="recent-card">
 
-          <div className="section-title">
+  <div className="section-title">
 
-            <h2>
-              Recent Trips
-            </h2>
+    <div className="section-heading">
 
-            <span>
-              {totalTrips} Trips
-            </span>
+      <h2>
+        Recent Trips
+      </h2>
+
+      <p>
+        Your latest travel plans
+      </p>
+
+    </div>
+
+    <span className="trip-count">
+      {totalTrips} Trips
+    </span>
+
+  </div>
+
+
+  <div className="recent-trips-list">
+
+    {trips.length > 0 ? (
+
+      trips.map((trip) => (
+
+        <div
+          className="recent-trip-item"
+          key={trip.id}
+        >
+
+          {/* TRIP ICON */}
+
+          <div className="recent-trip-icon">
+            <FaPlaneDeparture />
+          </div>
+
+
+          {/* TRIP INFORMATION */}
+
+          <div className="recent-trip-info">
+
+            <h3>
+              {trip.tripName}
+            </h3>
+
+            <p>
+              <FaMapMarkerAlt />
+              {trip.destination}
+            </p>
 
           </div>
 
 
-          <table>
+          {/* BUDGET */}
 
-            <thead>
+          <div className="recent-trip-budget">
 
-              <tr>
+            <span>
+              Budget
+            </span>
 
-                <th>
-                  Trip
-                </th>
+            <strong>
+              ₹
+              {Number(
+                trip.budget || 0
+              ).toLocaleString()}
+            </strong>
 
-                <th>
-                  Destination
-                </th>
-
-                <th>
-                  Budget
-                </th>
-
-              </tr>
-
-            </thead>
-
-
-            <tbody>
-
-              {trips.length > 0 ? (
-
-                trips.map((trip) => (
-
-                  <tr key={trip.id}>
-
-                    <td>
-                      {trip.tripName}
-                    </td>
-
-                    <td>
-                      {trip.destination}
-                    </td>
-
-                    <td>
-
-                      ₹{Number(
-                        trip.budget || 0
-                      ).toLocaleString()}
-
-                    </td>
-
-                  </tr>
-
-                ))
-
-              ) : (
-
-                <tr>
-
-                  <td colSpan="3">
-
-                    No trips available.
-
-                  </td>
-
-                </tr>
-
-              )}
-
-            </tbody>
-
-          </table>
+          </div>
 
         </div>
+
+      ))
+
+    ) : (
+
+      <div className="recent-trips-empty">
+
+        <FaSuitcase />
+
+        <h3>
+          No trips yet
+        </h3>
+
+        <p>
+          Create your first trip to see it here.
+        </p>
+
+      </div>
+
+    )}
+
+  </div>
+
+</div>
 
       </div>
 
@@ -590,9 +905,7 @@ function Dashboard() {
           Budget & Expense Report
         </h2>
 
-
         <div className="budget-summary">
-
 
           <div className="summary-box">
 
@@ -601,7 +914,8 @@ function Dashboard() {
             </p>
 
             <h3>
-              ₹{totalBudget.toLocaleString()}
+              ₹
+              {totalBudget.toLocaleString()}
             </h3>
 
           </div>
@@ -614,7 +928,8 @@ function Dashboard() {
             </p>
 
             <h3>
-              ₹{totalExpenses.toLocaleString()}
+              ₹
+              {totalExpenses.toLocaleString()}
             </h3>
 
           </div>
@@ -627,7 +942,8 @@ function Dashboard() {
             </p>
 
             <h3>
-              ₹{remainingBudget.toLocaleString()}
+              ₹
+              {remainingBudget.toLocaleString()}
             </h3>
 
           </div>
@@ -652,44 +968,129 @@ function Dashboard() {
 
         <div className="budget-chart">
 
-          <ResponsiveContainer
-            width="100%"
-            height={320}
-          >
+  <div className="budget-chart-header">
+    <div>
+      <h3>Budget Utilization</h3>
 
-            <BarChart
-              data={budgetChartData}
-            >
+      <p>
+        Track how much of your total budget has been spent.
+      </p>
+    </div>
 
-              <CartesianGrid
-                strokeDasharray="3 3"
-              />
+    <div className="budget-percentage">
+      {budgetUsedPercentage.toFixed(1)}%
+      <span>used</span>
+    </div>
+  </div>
 
-              <XAxis
-                dataKey="name"
-              />
+  <ResponsiveContainer
+    width="100%"
+    height={180}
+  >
 
-              <YAxis />
+    <BarChart
+      data={budgetChartData}
+      layout="vertical"
+      margin={{
+        top: 20,
+        right: 30,
+        left: 20,
+        bottom: 20
+      }}
+    >
 
-              <Tooltip
-                formatter={(value) =>
-                  `₹${Number(
-                    value
-                  ).toLocaleString()}`
-                }
-              />
+      <CartesianGrid
+        horizontal={false}
+        vertical={false}
+      />
 
-              <Bar
-                dataKey="amount"
-                fill="#1565c0"
-                radius={[8, 8, 0, 0]}
-              />
+      <XAxis
+        type="number"
+        hide
+        domain={[
+          0,
+          totalBudget
+        ]}
+      />
 
-            </BarChart>
+      <YAxis
+        type="category"
+        dataKey="name"
+        hide
+      />
 
-          </ResponsiveContainer>
+      <Tooltip
+        formatter={(value, name) => [
+          `₹${Number(value).toLocaleString()}`,
+          name === "expenses"
+            ? "Expenses"
+            : "Remaining"
+        ]}
+      />
 
-        </div>
+      <Bar
+        dataKey="expenses"
+        stackId="budget"
+        fill="#ef4444"
+        radius={[
+          12,
+          0,
+          0,
+          12
+        ]}
+        barSize={55}
+      />
+
+      <Bar
+        dataKey="remaining"
+        stackId="budget"
+        fill="#dbeafe"
+        radius={[
+          0,
+          12,
+          12,
+          0
+        ]}
+        barSize={55}
+      />
+
+    </BarChart>
+
+  </ResponsiveContainer>
+
+  <div className="budget-chart-legend">
+
+    <div className="budget-legend-item">
+      <span className="legend-dot expenses-dot"></span>
+
+      <div>
+        <strong>
+          ₹{totalExpenses.toLocaleString()}
+        </strong>
+
+        <span>
+          Expenses
+        </span>
+      </div>
+    </div>
+
+    <div className="budget-legend-item">
+      <span className="legend-dot remaining-dot"></span>
+
+      <div>
+        <strong>
+          ₹{remainingBudget.toLocaleString()}
+        </strong>
+
+        <span>
+          Remaining
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
       </div>
 
@@ -708,7 +1109,6 @@ function Dashboard() {
 
           <div className="category-report-content">
 
-
             {/* PIE CHART */}
 
             <div className="category-chart">
@@ -720,44 +1120,67 @@ function Dashboard() {
 
                 <PieChart>
 
-                  <Pie
-                    data={categoryChartData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={120}
-                    label
-                  >
+  <Pie
+    data={categoryChartData}
+    dataKey="value"
+    nameKey="name"
+    cx="50%"
+    cy="50%"
+    outerRadius={120}
+    innerRadius={65}
+    paddingAngle={3}
+  >
 
-                    {categoryChartData.map(
-                      (entry, index) => (
+    {categoryChartData.map(
+      (entry, index) => (
 
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={
-                            COLORS[
-                              index % COLORS.length
-                            ]
-                          }
-                        />
+        <Cell
+          key={`cell-${index}`}
+          fill={
+            COLORS[
+              index %
+              COLORS.length
+            ]
+          }
+        />
 
-                      )
-                    )}
+      )
+    )}
 
-                  </Pie>
+  </Pie>
 
-                  <Tooltip
-                    formatter={(value) =>
-                      `₹${Number(
-                        value
-                      ).toLocaleString()}`
-                    }
-                  />
+  <Tooltip
+    formatter={(value) =>
+      `₹${Number(
+        value
+      ).toLocaleString()}`
+    }
+  />
 
-                  <Legend />
+  <text
+    x="50%"
+    y="47%"
+    textAnchor="middle"
+    dominantBaseline="middle"
+    fill="#111827"
+    fontSize="22"
+    fontWeight="700"
+  >
+    ₹{totalExpenses.toLocaleString()}
+  </text>
 
-                </PieChart>
+  <text
+    x="50%"
+    y="55%"
+    textAnchor="middle"
+    dominantBaseline="middle"
+    fill="#6b7280"
+    fontSize="12"
+  >
+    Total Expenses
+  </text>
+
+</PieChart>
 
               </ResponsiveContainer>
 
@@ -783,11 +1206,11 @@ function Dashboard() {
                         style={{
                           backgroundColor:
                             COLORS[
-                              index % COLORS.length
+                              index %
+                              COLORS.length
                             ]
                         }}
-                      >
-                      </span>
+                      />
 
                       <span>
                         {category.name}
@@ -796,7 +1219,8 @@ function Dashboard() {
                     </div>
 
                     <strong>
-                      ₹{Number(
+                      ₹
+                      {Number(
                         category.value
                       ).toLocaleString()}
                     </strong>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
+
 import "../styles/AddExpense.css";
 
 function AddExpense() {
@@ -17,7 +18,6 @@ function AddExpense() {
     });
 
     const [error, setError] = useState("");
-
 
     // =====================================
     // HANDLE INPUT CHANGE
@@ -82,9 +82,12 @@ function AddExpense() {
 
         try {
 
-            await axios.post(
-                `https://tripnest-fird.onrender.com/api/expenses/${id}`,
-                expense
+            await API.post(
+                `/expenses/${id}`,
+                {
+                    ...expense,
+                    amount: Number(expense.amount)
+                }
             );
 
             alert(
@@ -97,7 +100,18 @@ function AddExpense() {
 
         } catch (error) {
 
-            console.log(error);
+            console.log(
+                "Add expense error:",
+                error
+            );
+
+            if (error.response) {
+
+                console.log(
+                    "Server response:",
+                    error.response.data
+                );
+            }
 
             setError(
                 "Failed to add expense. Please try again."
@@ -203,9 +217,7 @@ function AddExpense() {
                     {/* SAVE BUTTON */}
 
                     <button type="submit">
-
                         Save Expense
-
                     </button>
 
                 </form>

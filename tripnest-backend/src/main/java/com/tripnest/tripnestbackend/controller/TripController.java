@@ -1,7 +1,10 @@
 package com.tripnest.tripnestbackend.controller;
 
 import com.tripnest.tripnestbackend.entity.Trip;
+import com.tripnest.tripnestbackend.entity.User;
+import com.tripnest.tripnestbackend.repository.UserRepository;
 import com.tripnest.tripnestbackend.service.TripService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,42 +15,91 @@ import java.util.List;
 public class TripController {
 
     private final TripService service;
+    private final UserRepository userRepository;
 
-    public TripController(TripService service) {
+    public TripController(
+            TripService service,
+            UserRepository userRepository) {
+
         this.service = service;
+        this.userRepository = userRepository;
     }
 
-    // Create Trip
+    // =====================================
+    // CREATE TRIP
+    // =====================================
+
     @PostMapping
-    public Trip createTrip(@RequestBody Trip trip) {
+    public Trip createTrip(
+            @RequestBody Trip trip,
+            Authentication authentication) {
 
         System.out.println("POST API HIT");
+
+        String email = authentication.getName();
+
+        System.out.println(
+                "Logged-in user email: " + email
+        );
+
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "User not found"
+                        )
+                );
+
+        trip.setUser(user);
+
+        System.out.println(
+                "Trip assigned to user ID: "
+                        + user.getId()
+        );
 
         return service.saveTrip(trip);
     }
 
-    // Get All Trips
+    // =====================================
+    // GET ALL TRIPS
+    // =====================================
+
     @GetMapping
     public List<Trip> getTrips() {
         return service.getAllTrips();
     }
 
-    // Get Trip By ID
+    // =====================================
+    // GET TRIP BY ID
+    // =====================================
+
     @GetMapping("/{id}")
-    public Trip getTripById(@PathVariable Long id) {
+    public Trip getTripById(
+            @PathVariable Long id) {
+
         return service.getTripById(id);
     }
 
-    // Update Trip
+    // =====================================
+    // UPDATE TRIP
+    // =====================================
+
     @PutMapping("/{id}")
-    public Trip updateTrip(@PathVariable Long id,
-                           @RequestBody Trip trip) {
+    public Trip updateTrip(
+            @PathVariable Long id,
+            @RequestBody Trip trip) {
+
         return service.updateTrip(id, trip);
     }
 
-    // Delete Trip
+    // =====================================
+    // DELETE TRIP
+    // =====================================
+
     @DeleteMapping("/{id}")
-    public void deleteTrip(@PathVariable Long id) {
+    public void deleteTrip(
+            @PathVariable Long id) {
+
         service.deleteTrip(id);
     }
 }

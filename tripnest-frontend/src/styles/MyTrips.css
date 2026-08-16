@@ -1,180 +1,595 @@
-/* =====================================
-   MY TRIPS PAGE
-===================================== */
+/* =====================================================
+   TRIPNEST — MY TRIPS
+   PREMIUM TRAVEL DESTINATION DESIGN
+===================================================== */
 
-.myTrips {
+.my-trips-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, #eef5ff, #f8fbff);
-    padding: 110px 40px 40px;
+
+    padding: 110px 40px 60px;
+
+    box-sizing: border-box;
+
+    position: relative;
+
+    background-image:
+        linear-gradient(
+            rgba(8, 25, 40, 0.45),
+            rgba(8, 25, 40, 0.58)
+        ),
+        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=90");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    background-attachment: fixed;
 }
 
-/* =====================================
-   HEADER
-===================================== */
+
+/* =====================================================
+   BACKGROUND LIGHT EFFECT
+===================================================== */
+
+.my-trips-page::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(0, 188, 212, 0.16),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(33, 150, 243, 0.18),
+            transparent 35%
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
 
 .pageHeader {
+    position: relative;
+
+    z-index: 2;
+
     text-align: center;
+
     margin-bottom: 35px;
 }
 
 .pageHeader h1 {
-    font-size: 40px;
-    color: #1565c0;
-    margin-bottom: 10px;
+    margin: 0 0 10px;
+
+    font-size: 42px;
+
+    font-weight: 800;
+
+    color: white;
+
+    letter-spacing: -0.5px;
+
+    text-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.35);
 }
 
 .pageHeader p {
-    color: #666;
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.88);
+
     font-size: 17px;
+
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.30);
 }
 
-/* =====================================
+
+/* =====================================================
    SEARCH
-===================================== */
+===================================================== */
 
 .searchContainer {
-    max-width: 550px;
-    margin: 0 auto 40px;
     position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 620px;
+
+    margin: 0 auto 45px;
 }
 
 .searchContainer input {
     width: 100%;
-    padding: 15px 20px 15px 50px;
-    border: none;
+
+    height: 60px;
+
+    box-sizing: border-box;
+
+    padding: 0 25px 0 55px;
+
+    border: 1px solid rgba(255, 255, 255, 0.65);
+
     outline: none;
-    border-radius: 50px;
-    background: white;
+
+    border-radius: 32px;
+
+    background:
+        rgba(255, 255, 255, 0.94);
+
+    color: #26384d;
+
     font-size: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.20);
+
+    transition:
+        0.25s ease;
+}
+
+.searchContainer input::placeholder {
+    color: #8a9bad;
+}
+
+.searchContainer input:focus {
+    background: white;
+
+    border-color: #42a5f5;
+
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.25),
+        0 0 0 4px rgba(66, 165, 245, 0.15);
 }
 
 .searchIcon {
     position: absolute;
-    left: 18px;
-    top: 16px;
+
+    left: 20px;
+
+    top: 20px;
+
     color: #1565c0;
-    font-size: 18px;
+
+    font-size: 19px;
+
+    z-index: 3;
 }
 
-/* =====================================
-   GRID
-===================================== */
+
+/* =====================================================
+   TRIP GRID
+===================================================== */
 
 .tripGrid {
+    position: relative;
+
+    z-index: 2;
+
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px,1fr));
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
     gap: 28px;
-}
-.buttonGrid{
-    margin-top:auto;
+
+    width: 100%;
 }
 
-/* =====================================
-   CARD
-===================================== */
+
+/* =====================================================
+   TRIP CARD
+===================================================== */
 
 .tripCard {
+    position: relative;
+
     display: flex;
     flex-direction: column;
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
-    transition: .35s;
-    border-top: 5px solid #1565c0;
-    height: 100%;
+
+    min-width: 0;
+    box-sizing: border-box;
+
+    /* Clearly visible premium background */
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.97) 0%,
+            rgba(238, 247, 255, 0.95) 55%,
+            rgba(220, 237, 252, 0.94) 100%
+        ) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+
+    border-top: 5px solid #2196f3 !important;
+
+    border-radius: 24px;
+
+    padding: 26px;
+
+    /* Strong professional depth */
+    box-shadow:
+        0 20px 45px rgba(5, 45, 75, 0.22),
+        0 5px 15px rgba(21, 101, 192, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
 }
+
+
 .tripCard:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 18px 40px rgba(0,0,0,.15);
+    transform: translateY(-9px);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #eef8ff 55%,
+            #dcefff 100%
+        ) !important;
+
+    box-shadow:
+        0 28px 60px rgba(5, 45, 75, 0.27),
+        0 10px 25px rgba(21, 101, 192, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
 }
+
+
+/* =====================================================
+   CARD DECORATIVE GLOW
+===================================================== */
+.tripCard::before {
+    content: "";
+
+    position: absolute;
+
+    top: -70px;
+    right: -70px;
+
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(66, 165, 245, 0.28),
+            rgba(144, 202, 249, 0.05)
+        );
+
+    pointer-events: none;
+}
+
+.tripCard::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -80px;
+    left: -80px;
+
+    width: 190px;
+    height: 190px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(21, 101, 192, 0.13),
+            rgba(66, 165, 245, 0.02)
+        );
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
 
 .cardHeader {
     display: flex;
+
     justify-content: space-between;
+
     align-items: flex-start;
+
+    gap: 15px;
+
     margin-bottom: 18px;
+}
+
+.cardHeader > div:first-child {
+    min-width: 0;
 }
 
 .cardHeader h2 {
-    color: #1565c0;
-    margin-bottom: 10px;
-    font-size: 24px;
+    margin: 0 0 10px;
+
+    color: #0d4f8b !important;
+
+    font-size: 23px;
+
+    font-weight: 800;
+
+    line-height: 1.3;
+
+    letter-spacing: -0.4px;
+
+    overflow-wrap: anywhere;
 }
+
+
+/* =====================================================
+   DESTINATION
+===================================================== */
 
 .destination {
     display: inline-flex;
+
     align-items: center;
-    gap: 8px;
-    background: #e3f2fd;
-    color: #1565c0;
+
+    gap: 7px;
+
+    max-width: 100%;
+
+    box-sizing: border-box;
+
     padding: 8px 14px;
+
     border-radius: 20px;
-    font-weight: 600;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e1f1ff,
+            #f4faff
+        ) !important;
+
+    border: 1px solid #cfe5f8;
+
+    color: #1565c0;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 4px 12px rgba(21, 101, 192, 0.08);
 }
 
-.budget {
-    background: linear-gradient(135deg,#1565c0,#42a5f5);
-    color: white;
-    padding: 10px 18px;
-    border-radius: 30px;
-    font-weight: bold;
-    white-space: nowrap;
+.destination svg {
+    flex-shrink: 0;
 }
+
+
+/* =====================================================
+   BUDGET
+===================================================== */
+
+.budget {
+    flex-shrink: 0;
+
+    padding: 10px 17px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1565c0,
+            #42a5f5
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 750;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 7px 18px rgba(21, 101, 192, 0.25);
+}
+
+
+/* =====================================================
+   DATES
+===================================================== */
 
 .dates {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
-    color:#555;
+
+    min-height: 40px;
+
     margin-bottom: 18px;
+
+    padding: 10px 13px;
+
+    box-sizing: border-box;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #eaf5ff
+        ) !important;
+
+    border: 1px solid #d2e6f8;
+
+    color: #50657c;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 4px 12px rgba(21, 101, 192, 0.06);
 }
 
+.dates svg {
+    color: #1976d2;
+}
+.dates svg {
+    flex-shrink: 0;
+
+    color: #1565c0;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
 .description {
-    color:#666;
+    min-height: 76px;
+
+    margin-bottom: 22px;
+
+    color: #667085;
+
+    font-size: 14.5px;
+
     line-height: 1.7;
-    margin-bottom: 20px;
 
     display: -webkit-box;
+
     -webkit-line-clamp: 3;
+
     -webkit-box-orient: vertical;
+
+    line-clamp: 3;
+
     overflow: hidden;
 }
 
 
-
-/* =====================================
-   BUTTONS
-===================================== */
+/* =====================================================
+   BUTTON GRID
+===================================================== */
 
 .buttonGrid {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
     gap: 10px;
+
+    margin-top: auto;
 }
 
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
 .buttonGrid button {
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 45px;
+
+    box-sizing: border-box;
+
     border: none;
-    border-radius: 10px;
-    padding: 12px;
+
+    border-radius: 11px;
+
+    padding: 10px 8px;
+
     color: white;
+
     cursor: pointer;
-    font-weight: 600;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
-    gap: 8px;
-    transition: .3s;
+
+    gap: 7px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+.buttonGrid button svg {
+    flex-shrink: 0;
+
+    font-size: 14px;
 }
 
 .buttonGrid button:hover {
-    transform: translateY(-3px);
+    transform:
+        translateY(-3px);
+
+    filter:
+        brightness(1.05);
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.15);
 }
+
+.buttonGrid button:active {
+    transform:
+        translateY(0);
+}
+
+
+/* =====================================================
+   BUTTON COLORS
+===================================================== */
 
 .edit {
     background: #f9a825;
-    color: #222;
+
+    color: #222 !important;
 }
 
 .blue {
@@ -197,53 +612,230 @@
     background: #e53935;
 }
 
-/* =====================================
+
+/* =====================================================
    EMPTY STATE
-===================================== */
+===================================================== */
 
 .emptyCard {
-    grid-column: 1/-1;
-    background: white;
-    border-radius: 20px;
-    padding: 60px;
+    grid-column: 1 / -1;
+
+    background:
+        rgba(255, 255, 255, 0.95);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.75);
+
+    border-radius: 22px;
+
+    padding: 70px 30px;
+
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.20);
+
+    position: relative;
 }
 
 .emptyCard h2 {
+    margin: 0 0 10px;
+
     color: #1565c0;
-    margin-bottom: 10px;
+
+    font-size: 25px;
 }
 
 .emptyCard p {
-    color: #666;
+    margin: 0;
+
+    color: #667085;
+
+    font-size: 15px;
 }
 
-/* =====================================
-   RESPONSIVE
-===================================== */
 
-@media (max-width:768px) {
+/* =====================================================
+   TABLET
+===================================================== */
 
-    .myTrips {
-        padding: 95px 18px 20px;
+@media (max-width: 1200px) {
+
+    .my-trips-page {
+        padding-left: 28px;
+
+        padding-right: 28px;
     }
+
+    .tripGrid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =====================================================
+   SMALL TABLET
+===================================================== */
+
+@media (max-width: 900px) {
 
     .tripGrid {
         grid-template-columns: 1fr;
     }
 
-    .cardHeader {
-        flex-direction: column;
-        gap: 15px;
+    .tripCard {
+        max-width: 700px;
+
+        width: 100%;
+
+        margin: 0 auto;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .my-trips-page {
+        padding:
+            95px
+            18px
+            30px;
+
+        background-attachment:
+            scroll;
     }
 
-    .buttonGrid {
-        grid-template-columns: 1fr;
+    .pageHeader {
+        margin-bottom: 28px;
     }
 
     .pageHeader h1 {
         font-size: 32px;
     }
 
+    .pageHeader p {
+        font-size: 15px;
+
+        line-height: 1.5;
+    }
+
+    .searchContainer {
+        margin-bottom: 30px;
+    }
+
+    .searchContainer input {
+        height: 54px;
+
+        font-size: 15px;
+    }
+
+    .searchIcon {
+        top: 18px;
+    }
+
+    .tripGrid {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .tripCard {
+        padding: 20px;
+
+        border-radius: 19px;
+    }
+
+    .cardHeader {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+    .cardHeader h2 {
+        font-size: 21px;
+    }
+
+    .budget {
+        align-self: flex-start;
+
+        font-size: 15px;
+    }
+
+    .description {
+        min-height: auto;
+
+        margin-bottom: 20px;
+    }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .my-trips-page {
+        padding-left: 12px;
+
+        padding-right: 12px;
+    }
+
+    .tripCard {
+        padding: 17px;
+    }
+
+    .pageHeader h1 {
+        font-size: 28px;
+    }
+
+    .pageHeader p {
+        font-size: 14px;
+    }
+
+    .cardHeader h2 {
+        font-size: 20px;
+    }
+
+    .destination {
+        font-size: 13px;
+    }
+
+    .budget {
+        font-size: 14px;
+
+        padding:
+            9px 14px;
+    }
+
+    .dates {
+        font-size: 13px;
+
+        align-items: flex-start;
+    }
+
+    .buttonGrid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+    }
+
+    .buttonGrid button {
+        min-height: 43px;
+
+        padding:
+            9px 5px;
+
+        font-size: 13px;
+
+        gap: 5px;
+    }
 }

@@ -2,6 +2,8 @@ package com.tripnest.tripnestbackend.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "notifications")
 public class Notification {
@@ -17,16 +19,40 @@ public class Notification {
     private String message;
 
     @Column(nullable = false)
-    private boolean isRead;
+    private String type;
+
+    @Column(nullable = false)
+    private boolean isRead = false;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Notification() {
     }
 
-    public Notification(Long id, String title, String message, boolean isRead) {
-        this.id = id;
+    public Notification(
+            String title,
+            String message,
+            String type,
+            User user
+    ) {
         this.title = title;
         this.message = message;
-        this.isRead = isRead;
+        this.type = type;
+        this.user = user;
+        this.isRead = false;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
     }
 
     public Long getId() {
@@ -53,11 +79,35 @@ public class Notification {
         this.message = message;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public boolean isRead() {
         return isRead;
     }
 
     public void setRead(boolean read) {
         isRead = read;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

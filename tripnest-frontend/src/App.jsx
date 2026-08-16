@@ -7,21 +7,32 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+
 import CreateTrip from "./pages/CreateTrip";
 import MyTrips from "./pages/MyTrips";
 import EditTrip from "./pages/EditTrip";
+
+import TripDetails from "./pages/TripDetails";
+
 import AddItinerary from "./pages/AddItinerary";
 import TripItinerary from "./pages/TripItinerary";
+
 import AddDestination from "./pages/AddDestination";
 import Destinations from "./pages/Destinations";
 import EditDestination from "./pages/EditDestination";
+import DestinationDetails from "./pages/DestinationDetails";
+
 import Expenses from "./pages/Expenses";
 import AddExpense from "./pages/AddExpense";
+import EditExpense from "./pages/EditExpense";
+
 import TripMembers from "./pages/TripMembers";
 import Documents from "./pages/Documents";
+
 import Profile from "./pages/Profile";
+import Notifications from "./pages/Notifications";
+
 import NotFound from "./pages/NotFound";
-import EditExpense from "./pages/EditExpense";
 
 import "./styles/App.css";
 
@@ -31,20 +42,79 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
 
-        {/* Profile */}
-        <Route path="/profile" element={<Profile />} />
+        {/* =====================================
+            GENERAL
+        ===================================== */}
 
-        {/* Trips */}
-        <Route path="/create-trip" element={<CreateTrip />} />
-        <Route path="/my-trips" element={<MyTrips />} />
-        <Route path="/edit-trip/:id" element={<EditTrip />} />
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-        {/* Itinerary */}
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+
+        {/* =====================================
+            PROFILE
+        ===================================== */}
+
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+
+        {/* =====================================
+            NOTIFICATIONS
+        ===================================== */}
+
+        <Route
+          path="/notifications"
+          element={<Notifications />}
+        />
+
+        {/* =====================================
+            TRIPS
+        ===================================== */}
+
+        <Route
+          path="/create-trip"
+          element={<CreateTrip />}
+        />
+
+        <Route
+          path="/my-trips"
+          element={<MyTrips />}
+        />
+
+        <Route
+          path="/edit-trip/:id"
+          element={<EditTrip />}
+        />
+
+        {/* ⭐ MAIN TRIP DETAILS PAGE */}
+
+        <Route
+          path="/trip/:id"
+          element={<TripDetails />}
+        />
+
+        {/* =====================================
+            ITINERARY
+        ===================================== */}
+
         <Route
           path="/trip/:id/itinerary"
           element={<TripItinerary />}
@@ -55,7 +125,10 @@ function App() {
           element={<AddItinerary />}
         />
 
-        {/* Expense */}
+        {/* =====================================
+            EXPENSES
+        ===================================== */}
+
         <Route
           path="/trip/:id/expenses"
           element={<Expenses />}
@@ -66,19 +139,33 @@ function App() {
           element={<AddExpense />}
         />
 
-        {/* Members */}
+        <Route
+          path="/edit-expense/:id"
+          element={<EditExpense />}
+        />
+
+        {/* =====================================
+            MEMBERS
+        ===================================== */}
+
         <Route
           path="/trip/:id/members"
           element={<TripMembers />}
         />
 
-        {/* Documents */}
+        {/* =====================================
+            DOCUMENTS
+        ===================================== */}
+
         <Route
           path="/trip/:id/documents"
           element={<Documents />}
         />
 
-        {/* Destinations */}
+        {/* =====================================
+            DESTINATIONS
+        ===================================== */}
+
         <Route
           path="/add-destination"
           element={<AddDestination />}
@@ -94,13 +181,22 @@ function App() {
           element={<EditDestination />}
         />
 
-        <Route
-  path="/edit-expense/:id"
-  element={<EditExpense />}
-/>
+        {/* ⭐ DESTINATION DETAILS */}
 
-        {/* 404 */}
-        <Route path="*" element={<NotFound />} />
+        <Route
+          path="/destination/:id"
+          element={<DestinationDetails />}
+        />
+
+        {/* =====================================
+            404
+        ===================================== */}
+
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+
       </Routes>
 
       <Footer />

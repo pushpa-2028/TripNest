@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+
+import API from "../api";
+
 import "../styles/TripItinerary.css";
 
 function TripItinerary() {
@@ -8,24 +10,46 @@ function TripItinerary() {
     const { id } = useParams();
 
     const [itineraries, setItineraries] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
         fetchItineraries();
-    }, []);
+
+    }, [id]);
 
     const fetchItineraries = async () => {
 
         try {
 
-            const response = await axios.get(
-                `https://tripnest-fird.onrender.com/api/itineraries/trip/${id}`
+            console.log(
+                "Fetching itinerary for Trip ID:",
+                id
+            );
+
+            const response = await API.get(
+                `/itineraries/trip/${id}`
+            );
+
+            console.log(
+                "Itinerary response:",
+                response.data
             );
 
             setItineraries(response.data);
 
         } catch (error) {
 
-            console.log(error);
+            console.error(
+                "Error fetching itineraries:",
+                error
+            );
+
+            setItineraries([]);
+
+        } finally {
+
+            setLoading(false);
 
         }
 
@@ -39,63 +63,85 @@ function TripItinerary() {
 
             <div className="top-bar">
 
-               <Link to={`/trip/${id}/add-itinerary`}>
+                <Link to={`/trip/${id}/add-itinerary`}>
+
                     <button className="add-btn">
                         + Add Activity
                     </button>
+
                 </Link>
 
             </div>
 
-            <table className="itinerary-table">
+            {loading ? (
 
-                <thead>
+                <p>Loading itinerary...</p>
 
-                    <tr>
+            ) : (
 
-                        <th>Day</th>
-                        <th>Activity</th>
-                        <th>Location</th>
-                        <th>Time</th>
-                        <th>Notes</th>
+                <table className="itinerary-table">
 
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {itineraries.length === 0 ? (
+                    <thead>
 
                         <tr>
-
-                            <td colSpan="5">
-                                No itinerary found.
-                            </td>
-
+                            <th>Day</th>
+                            <th>Activity</th>
+                            <th>Location</th>
+                            <th>Time</th>
+                            <th>Notes</th>
                         </tr>
 
-                    ) : (
+                    </thead>
 
-                        itineraries.map((item) => (
+                    <tbody>
 
-                            <tr key={item.id}>
+                        {itineraries.length === 0 ? (
 
-                                <td>Day {item.dayNumber}</td>
-                                <td>{item.activity}</td>
-                                <td>{item.location}</td>
-                                <td>{item.activityTime}</td>
-                                <td>{item.notes}</td>
+                            <tr>
+
+                                <td colSpan="5">
+                                    No itinerary found.
+                                </td>
 
                             </tr>
 
-                        ))
+                        ) : (
 
-                    )}
+                            itineraries.map((item) => (
 
-                </tbody>
+                                <tr key={item.id}>
 
-            </table>
+                                    <td>
+                                        Day {item.dayNumber}
+                                    </td>
+
+                                    <td>
+                                        {item.activity}
+                                    </td>
+
+                                    <td>
+                                        {item.location}
+                                    </td>
+
+                                    <td>
+                                        {item.activityTime}
+                                    </td>
+
+                                    <td>
+                                        {item.notes}
+                                    </td>
+
+                                </tr>
+
+                            ))
+
+                        )}
+
+                    </tbody>
+
+                </table>
+
+            )}
 
         </div>
 

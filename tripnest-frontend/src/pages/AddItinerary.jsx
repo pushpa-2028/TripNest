@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+
+import API from "../api";
+
 import "../styles/AddItinerary.css";
 
 function AddItinerary() {
@@ -16,25 +18,55 @@ function AddItinerary() {
         notes: ""
     });
 
+    const [saving, setSaving] = useState(false);
+
+    // =========================================
+    // HANDLE INPUT CHANGE
+    // =========================================
+
     const handleChange = (e) => {
+
         setItinerary({
             ...itinerary,
             [e.target.name]: e.target.value
         });
+
     };
+
+    // =========================================
+    // SAVE ACTIVITY
+    // =========================================
 
     const saveItinerary = async (e) => {
 
         e.preventDefault();
 
+        // Prevent multiple clicks
+        if (saving) {
+            return;
+        }
+
+        setSaving(true);
+
         try {
 
-            await axios.post(
-                "https://tripnest-fird.onrender.com/api/itineraries",
+            console.log("Saving itinerary for trip:", id);
+
+            const response = await API.post(
+                "/itineraries",
                 {
-                    tripId: id,
-                    ...itinerary
+                    tripId: Number(id),
+                    dayNumber: Number(itinerary.dayNumber),
+                    activity: itinerary.activity,
+                    location: itinerary.location,
+                    activityTime: itinerary.activityTime,
+                    notes: itinerary.notes
                 }
+            );
+
+            console.log(
+                "Itinerary saved successfully:",
+                response.data
             );
 
             alert("Activity Added Successfully!");
@@ -43,9 +75,29 @@ function AddItinerary() {
 
         } catch (error) {
 
-            console.log(error);
+            console.error(
+                "Failed to save itinerary:",
+                error
+            );
+
+            if (error.response) {
+
+                console.error(
+                    "Server response:",
+                    error.response.data
+                );
+
+                console.error(
+                    "Status:",
+                    error.response.status
+                );
+
+            }
+
             alert("Failed to add activity.");
 
+            // Allow user to try again
+            setSaving(false);
         }
 
     };
@@ -60,14 +112,20 @@ function AddItinerary() {
 
                 <form onSubmit={saveItinerary}>
 
+                    {/* DAY NUMBER */}
+
                     <input
                         type="number"
                         name="dayNumber"
                         placeholder="Day Number"
                         value={itinerary.dayNumber}
                         onChange={handleChange}
+                        min="1"
                         required
+                        disabled={saving}
                     />
+
+                    {/* ACTIVITY */}
 
                     <input
                         type="text"
@@ -76,7 +134,10 @@ function AddItinerary() {
                         value={itinerary.activity}
                         onChange={handleChange}
                         required
+                        disabled={saving}
                     />
+
+                    {/* LOCATION */}
 
                     <input
                         type="text"
@@ -85,7 +146,10 @@ function AddItinerary() {
                         value={itinerary.location}
                         onChange={handleChange}
                         required
+                        disabled={saving}
                     />
+
+                    {/* TIME */}
 
                     <input
                         type="text"
@@ -94,7 +158,10 @@ function AddItinerary() {
                         value={itinerary.activityTime}
                         onChange={handleChange}
                         required
+                        disabled={saving}
                     />
+
+                    {/* NOTES */}
 
                     <textarea
                         name="notes"
@@ -102,10 +169,18 @@ function AddItinerary() {
                         placeholder="Notes"
                         value={itinerary.notes}
                         onChange={handleChange}
-                    ></textarea>
+                        disabled={saving}
+                    />
 
-                    <button type="submit">
-                        Save Activity
+                    {/* SAVE BUTTON */}
+
+                    <button
+                        type="submit"
+                        disabled={saving}
+                    >
+                        {saving
+                            ? "Saving Activity..."
+                            : "Save Activity"}
                     </button>
 
                 </form>
@@ -115,7 +190,6 @@ function AddItinerary() {
         </div>
 
     );
-
 }
 
 export default AddItinerary;

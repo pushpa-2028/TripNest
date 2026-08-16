@@ -1,0 +1,1289 @@
+/* =========================================
+   TRIP DETAILS PAGE
+========================================= */
+
+.tripDetailsPage {
+  min-height: 100vh;
+  padding: 35px 25px 70px;
+  background: linear-gradient(135deg, #f5f7ff, #eef4ff);
+  box-sizing: border-box;
+}
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.tripDetailsTopBar {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.backToTrips {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.backToTrips:hover {
+  transform: translateX(-3px);
+}
+
+.downloadPdfBtn {
+  border: none;
+  border-radius: 10px;
+
+  padding: 11px 18px;
+
+  background: #ef4444;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.downloadPdfBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.tripHero {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto 25px;
+
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #6366f1,
+    #7c3aed
+  );
+
+  color: white;
+
+  border-radius: 22px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 15px 35px rgba(79, 70, 229, 0.2);
+}
+
+.tripHeroContent {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.tripHeroIcon {
+  width: 65px;
+  height: 65px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 27px;
+
+  flex-shrink: 0;
+}
+
+.tripHeroText {
+  flex: 1;
+}
+
+.tripTitleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tripTitleRow h1 {
+  margin: 0;
+
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.tripStatus {
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: white;
+}
+
+.status-upcoming {
+  background: rgba(59, 130, 246, 0.9);
+}
+
+.status-ongoing {
+  background: rgba(16, 185, 129, 0.9);
+}
+
+.status-completed {
+  background: rgba(107, 114, 128, 0.9);
+}
+
+.tripDestination {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin: 10px 0 0;
+
+  font-size: 16px;
+  opacity: 0.95;
+}
+
+.tripDescription {
+  margin: 12px 0 0;
+
+  max-width: 700px;
+
+  line-height: 1.6;
+
+  opacity: 0.88;
+}
+
+.editTripMainBtn {
+  border: none;
+
+  padding: 11px 18px;
+
+  border-radius: 10px;
+
+  background: white;
+  color: #4f46e5;
+
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.editTripMainBtn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================
+   OVERVIEW
+========================================= */
+
+.tripOverview {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto 25px;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 16px;
+}
+
+.overviewCard {
+  background: white;
+
+  border-radius: 16px;
+
+  padding: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  box-shadow:
+    0 8px 25px rgba(31, 41, 55, 0.06);
+
+  border: 1px solid #edf0f7;
+
+  transition: 0.2s;
+}
+
+.overviewCard:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 28px rgba(79, 70, 229, 0.09);
+}
+
+.overviewIcon {
+  width: 45px;
+  height: 45px;
+
+  border-radius: 12px;
+
+  background: #eef2ff;
+
+  color: #4f46e5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.overviewCard span {
+  display: block;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  margin-bottom: 5px;
+}
+
+.overviewCard strong {
+  display: block;
+
+  color: #111827;
+
+  font-size: 16px;
+}
+
+.overviewCard small {
+  display: block;
+
+  color: #6b7280;
+
+  margin-top: 3px;
+}
+
+/* =========================================
+   GENERAL SECTIONS
+========================================= */
+
+.tripSection {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto 25px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 8px 25px rgba(31, 41, 55, 0.06);
+
+  border: 1px solid #edf0f7;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 22px;
+}
+
+.sectionHeader h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin: 0;
+
+  font-size: 21px;
+
+  color: #111827;
+}
+
+.sectionHeader h2 svg {
+  color: #4f46e5;
+}
+
+.sectionHeader p {
+  margin: 6px 0 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+.viewAllLink {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #4f46e5;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.viewAllLink:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   TIMELINE
+========================================= */
+
+.timeline {
+  display: flex;
+
+  align-items: center;
+
+  padding: 15px 10px;
+}
+
+.timelineItem {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  min-width: 210px;
+}
+
+.timelineDot {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  background: #eef2ff;
+
+  color: #4f46e5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.timelineContent span {
+  font-size: 11px;
+
+  color: #6b7280;
+
+  font-weight: 700;
+}
+
+.timelineContent h3 {
+  margin: 3px 0;
+
+  font-size: 16px;
+
+  color: #111827;
+}
+
+.timelineContent p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 12px;
+}
+
+.timelineLine {
+  height: 2px;
+
+  flex: 1;
+
+  min-width: 50px;
+
+  margin: 0 20px;
+
+  background: #dfe3f0;
+}
+
+/* =========================================
+   MAIN GRID
+========================================= */
+
+.tripMainGrid {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto 0;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 25px;
+}
+
+/* =========================================
+   ITINERARY
+========================================= */
+
+.itineraryPreviewList {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.itineraryPreviewItem {
+  display: flex;
+
+  gap: 13px;
+
+  padding: 13px;
+
+  background: #f8f9ff;
+
+  border: 1px solid #e7e9f7;
+
+  border-radius: 12px;
+
+  transition: 0.2s;
+}
+
+.itineraryPreviewItem:hover {
+  border-color: #cfd3f7;
+
+  transform: translateX(2px);
+}
+
+.dayBadge {
+  align-self: flex-start;
+
+  background: #4f46e5;
+
+  color: white;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.itineraryItemInfo {
+  flex: 1;
+}
+
+.itineraryItemInfo h3 {
+  margin: 0 0 6px;
+
+  font-size: 15px;
+
+  color: #111827;
+}
+
+.itineraryItemInfo p {
+  margin: 0;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  color: #6b7280;
+
+  font-size: 12px;
+}
+
+.itineraryItemInfo p span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.itineraryItemInfo svg {
+  margin-right: 4px;
+
+  color: #4f46e5;
+}
+
+.itineraryItemInfo small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #6b7280;
+
+  line-height: 1.4;
+}
+
+/* =========================================
+   EMPTY STATES
+========================================= */
+
+.emptyPreview {
+  text-align: center;
+
+  padding: 30px 15px;
+}
+
+.emptyPreviewIcon {
+  font-size: 40px;
+
+  margin-bottom: 10px;
+}
+
+.emptyPreview h3 {
+  margin: 0;
+
+  color: #111827;
+}
+
+.emptyPreview p {
+  color: #6b7280;
+
+  font-size: 13px;
+
+  margin: 7px 0 15px;
+}
+
+.primaryActionBtn,
+.secondaryActionBtn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 10px 15px;
+
+  border-radius: 9px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  transition: 0.2s;
+}
+
+.primaryActionBtn {
+  background: #4f46e5;
+
+  color: white;
+}
+
+.secondaryActionBtn {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin-top: 15px;
+
+  background: #eef2ff;
+
+  color: #4f46e5;
+}
+
+.primaryActionBtn:hover,
+.secondaryActionBtn:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   EXPENSES
+========================================= */
+
+.expenseMiniStats {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.expenseMiniStats div {
+  padding: 13px;
+
+  border-radius: 10px;
+
+  background: #f8f9ff;
+
+  text-align: center;
+}
+
+.expenseMiniStats span {
+  display: block;
+
+  font-size: 11px;
+
+  color: #6b7280;
+
+  margin-bottom: 5px;
+}
+
+.expenseMiniStats strong {
+  font-size: 14px;
+}
+
+.positiveAmount {
+  color: #059669;
+}
+
+.negativeAmount {
+  color: #dc2626;
+}
+
+.budgetProgressSection {
+  margin-bottom: 20px;
+}
+
+.progressHeader {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: 7px;
+
+  font-size: 12px;
+}
+
+.progressHeader span {
+  color: #6b7280;
+}
+
+.progressHeader strong {
+  color: #111827;
+}
+
+.progressBar {
+  height: 9px;
+
+  background: #e5e7eb;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+
+  background: #4f46e5;
+
+  border-radius: 20px;
+
+  transition: width 0.5s ease;
+}
+
+.progressFill.overBudget {
+  background: #ef4444;
+}
+
+.recentExpenses {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.recentExpenseItem {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 11px 12px;
+
+  border-bottom: 1px solid #edf0f7;
+}
+
+.recentExpenseItem h4 {
+  margin: 0 0 4px;
+
+  font-size: 13px;
+
+  color: #111827;
+}
+
+.recentExpenseItem span {
+  font-size: 11px;
+
+  color: #6b7280;
+}
+
+.recentExpenseItem strong {
+  color: #111827;
+
+  font-size: 13px;
+}
+
+.emptyExpenseSmall {
+  text-align: center;
+
+  padding: 20px;
+
+  color: #6b7280;
+}
+
+.emptyExpenseSmall span {
+  display: block;
+
+  font-size: 30px;
+
+  margin-bottom: 5px;
+}
+
+.emptyExpenseSmall p {
+  margin: 0;
+
+  font-size: 13px;
+}
+
+/* =========================================
+   TRAVELERS
+========================================= */
+
+.travelersSection {
+  margin-top: 25px;
+}
+
+.travelersGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 14px;
+}
+
+.travelerCard {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 15px;
+
+  background: linear-gradient(
+    135deg,
+    #f8f9ff,
+    #ffffff
+  );
+
+  border: 1px solid #e7e9f7;
+
+  border-radius: 14px;
+
+  transition: 0.2s;
+}
+
+.travelerCard:hover {
+  transform: translateY(-3px);
+
+  border-color: #cfd3f7;
+
+  box-shadow:
+    0 10px 22px rgba(79, 70, 229, 0.08);
+}
+
+.travelerAvatar {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #7c3aed
+  );
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  flex-shrink: 0;
+}
+
+.travelerInfo {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.travelerInfo h3 {
+  margin: 0 0 6px;
+
+  color: #111827;
+
+  font-size: 14px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.travelerInfo p {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin: 0 0 8px;
+
+  color: #6b7280;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.travelerInfo p svg {
+  color: #4f46e5;
+
+  flex-shrink: 0;
+}
+
+.travelerRole {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 4px 8px;
+
+  border-radius: 20px;
+
+  background: #f3f4f6;
+
+  color: #6b7280;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+.travelerRole svg {
+  font-size: 9px;
+}
+
+.ownerRole {
+  background: #eef2ff;
+
+  color: #4f46e5;
+}
+
+/* =========================================
+   QUICK ACTIONS
+========================================= */
+
+.quickActionsSection {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 25px auto 0;
+}
+
+.quickActionsGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 14px;
+}
+
+.quickActionCard {
+  border: 1px solid #e7e9f2;
+
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  text-decoration: none;
+
+  color: inherit;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.quickActionCard:hover {
+  transform: translateY(-3px);
+
+  border-color: #cfd2f8;
+
+  box-shadow:
+    0 10px 22px rgba(79, 70, 229, 0.08);
+}
+
+.quickActionIcon {
+  width: 43px;
+  height: 43px;
+
+  border-radius: 11px;
+
+  background: #eef2ff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+
+  flex-shrink: 0;
+}
+
+.quickActionCard div:nth-child(2) {
+  flex: 1;
+}
+
+.quickActionCard h3 {
+  margin: 0 0 4px;
+
+  font-size: 14px;
+
+  color: #111827;
+}
+
+.quickActionCard p {
+  margin: 0;
+
+  font-size: 11px;
+
+  color: #6b7280;
+}
+
+.quickActionCard > svg {
+  color: #9ca3af;
+
+  font-size: 13px;
+}
+
+.pdfAction > svg {
+  color: #ef4444;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.tripDetailsLoading {
+  min-height: 70vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #4b5563;
+}
+
+.tripDetailsLoading h3 {
+  margin: 15px 0 5px;
+
+  color: #111827;
+}
+
+.tripDetailsLoading p {
+  margin: 0;
+
+  font-size: 13px;
+}
+
+.loadingSpinner {
+  width: 42px;
+  height: 42px;
+
+  border: 4px solid #e5e7eb;
+
+  border-top-color: #4f46e5;
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.tripDetailsError {
+  min-height: 70vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 30px;
+}
+
+.errorIcon {
+  font-size: 45px;
+
+  margin-bottom: 10px;
+}
+
+.tripDetailsError h2 {
+  margin: 0 0 7px;
+
+  color: #111827;
+}
+
+.tripDetailsError p {
+  margin: 0 0 18px;
+
+  color: #6b7280;
+}
+
+.tripDetailsError button {
+  border: none;
+
+  background: #4f46e5;
+
+  color: white;
+
+  padding: 11px 17px;
+
+  border-radius: 9px;
+
+  font-weight: 600;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  cursor: pointer;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .tripOverview {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .travelersGrid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .quickActionsGrid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+
+  .tripMainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .tripHeroContent {
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+  .editTripMainBtn {
+    margin-left: 87px;
+  }
+
+  .timeline {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .timelineLine {
+    width: 2px;
+
+    height: 35px;
+
+    flex: none;
+
+    margin: 0 0 0 22px;
+  }
+
+  .travelersGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .tripDetailsPage {
+    padding: 20px 12px 50px;
+  }
+
+  .tripDetailsTopBar {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .downloadPdfBtn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .tripHero {
+    padding: 22px;
+  }
+
+  .tripHeroContent {
+    flex-direction: column;
+  }
+
+  .tripHeroIcon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .tripTitleRow h1 {
+    font-size: 25px;
+  }
+
+  .editTripMainBtn {
+    margin-left: 0;
+
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .tripOverview {
+    grid-template-columns: 1fr;
+  }
+
+  .tripSection {
+    padding: 18px;
+  }
+
+  .expenseMiniStats {
+    grid-template-columns: 1fr;
+  }
+
+  .quickActionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionHeader {
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .travelerCard {
+    padding: 13px;
+  }
+
+  .travelerAvatar {
+    width: 43px;
+    height: 43px;
+  }
+
+  .travelerInfo p {
+    max-width: 200px;
+  }
+}

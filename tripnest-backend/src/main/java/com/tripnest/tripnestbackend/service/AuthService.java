@@ -19,32 +19,67 @@ public class AuthService {
     @Autowired
     private JwtService jwtService;
 
+    // =====================================
+    // LOGIN
+    // =====================================
+
     public AuthResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(
+                        () -> new RuntimeException("User not found")
+                );
 
         if (!user.getPassword().equals(request.getPassword())) {
-            throw new RuntimeException("Invalid password");
+
+            throw new RuntimeException(
+                    "Invalid password"
+            );
         }
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token =
+                jwtService.generateToken(
+                        user.getEmail()
+                );
 
-        return new AuthResponse(token);
+        return new AuthResponse(
+                token,
+                user.getId()
+        );
     }
+
+    // =====================================
+    // REGISTER
+    // =====================================
 
     public String register(RegisterRequest request) {
 
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+        if (userRepository
+                .findByEmail(request.getEmail())
+                .isPresent()) {
+
+            throw new RuntimeException(
+                    "Email already exists"
+            );
         }
 
         User user = new User();
 
-        user.setFullName(request.getFullName());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        user.setRole(Role.USER);
+        user.setFullName(
+                request.getFullName()
+        );
+
+        user.setEmail(
+                request.getEmail()
+        );
+
+        user.setPassword(
+                request.getPassword()
+        );
+
+        user.setRole(
+                Role.USER
+        );
 
         userRepository.save(user);
 

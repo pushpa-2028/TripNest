@@ -15,39 +15,82 @@ public class TripService {
         this.repository = repository;
     }
 
-    // Create Trip
+    // =====================================
+    // CREATE TRIP
+    // =====================================
+
     public Trip saveTrip(Trip trip) {
         return repository.save(trip);
     }
 
-    // Get All Trips
+    // =====================================
+    // GET ALL TRIPS
+    // =====================================
+
     public List<Trip> getAllTrips() {
         return repository.findAll();
     }
 
-    // Get Trip By ID
+    // =====================================
+    // GET TRIP BY ID
+    // =====================================
+
     public Trip getTripById(Long id) {
+
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Trip not found"));
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "Trip not found"
+                        )
+                );
     }
 
-    // Update Trip
-    public Trip updateTrip(Long id, Trip updatedTrip) {
+    // =====================================
+    // UPDATE TRIP
+    // =====================================
+
+    public Trip updateTrip(
+            Long id,
+            Trip updatedTrip) {
 
         Trip trip = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Trip not found"));
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "Trip not found"
+                        )
+                );
 
-        trip.setTripName(updatedTrip.getTripName());
-        trip.setDestination(updatedTrip.getDestination());
-        trip.setStartDate(updatedTrip.getStartDate());
-        trip.setEndDate(updatedTrip.getEndDate());
-        trip.setBudget(updatedTrip.getBudget());
-        trip.setDescription(updatedTrip.getDescription());
+        trip.setTripName(
+                updatedTrip.getTripName()
+        );
+
+        trip.setDestination(
+                updatedTrip.getDestination()
+        );
+
+        trip.setStartDate(
+                updatedTrip.getStartDate()
+        );
+
+        trip.setEndDate(
+                updatedTrip.getEndDate()
+        );
+
+        trip.setBudget(
+                updatedTrip.getBudget()
+        );
+
+        trip.setDescription(
+                updatedTrip.getDescription()
+        );
 
         return repository.save(trip);
     }
 
-    // Delete Trip
+    // =====================================
+    // DELETE TRIP
+    // =====================================
+
     public void deleteTrip(Long id) {
         repository.deleteById(id);
     }

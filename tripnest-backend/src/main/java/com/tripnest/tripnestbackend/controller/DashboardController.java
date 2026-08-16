@@ -1,8 +1,11 @@
 package com.tripnest.tripnestbackend.controller;
 
-import com.tripnest.tripnestbackend.dto.DashboardResponse;
+import com.tripnest.tripnestbackend.entity.DashboardResponse;
 import com.tripnest.tripnestbackend.service.DashboardService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -19,5 +22,4 @@ public class DashboardController {
     public DashboardResponse getDashboardData() {
         return service.getDashboardData();
     }
-
 }

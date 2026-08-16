@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
 
 import {
   FaWallet,
@@ -17,6 +17,7 @@ import {
 import "../styles/Expenses.css";
 
 function Expenses() {
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -29,108 +30,235 @@ function Expenses() {
     percentageUsed: 0
   });
 
+  // =====================================
+  // FETCH DATA
+  // =====================================
+
   useEffect(() => {
     fetchExpenses();
     fetchSummary();
   }, [id]);
 
+
+  // =====================================
+  // FETCH EXPENSES
+  // =====================================
+
   const fetchExpenses = async () => {
+
     try {
-      const response = await axios.get(
-        `https://tripnest-fird.onrender.com/api/expenses/trip/${id}`
+
+      const response = await API.get(
+        `/expenses/trip/${id}`
       );
 
       setExpenses(response.data);
+
     } catch (error) {
-      console.log(error);
+
+      console.log(
+        "Fetch expenses error:",
+        error
+      );
+
+      if (error.response) {
+        console.log(
+          "Server response:",
+          error.response.data
+        );
+      }
     }
   };
 
+
+  // =====================================
+  // FETCH BUDGET SUMMARY
+  // =====================================
+
   const fetchSummary = async () => {
+
     try {
-      const response = await axios.get(
-        `https://tripnest-fird.onrender.com/api/expenses/summary/${id}`
+
+      const response = await API.get(
+        `/expenses/summary/${id}`
       );
 
       setSummary(response.data);
+
     } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const deleteExpense = async (expenseId) => {
-    if (!window.confirm("Delete this expense?")) return;
-
-    try {
-      await axios.delete(
-        `https://tripnest-fird.onrender.com/api/expenses/${expenseId}`
+      console.log(
+        "Fetch summary error:",
+        error
       );
 
-      fetchExpenses();
-      fetchSummary();
-    } catch (error) {
-      console.log(error);
+      if (error.response) {
+        console.log(
+          "Server response:",
+          error.response.data
+        );
+      }
     }
   };
 
+
+  // =====================================
+  // DELETE EXPENSE
+  // =====================================
+
+  const deleteExpense = async (expenseId) => {
+
+    if (!window.confirm("Delete this expense?")) {
+      return;
+    }
+
+    try {
+
+      await API.delete(
+        `/expenses/${expenseId}`
+      );
+
+      await fetchExpenses();
+      await fetchSummary();
+
+    } catch (error) {
+
+      console.log(
+        "Delete expense error:",
+        error
+      );
+
+      if (error.response) {
+        console.log(
+          "Server response:",
+          error.response.data
+        );
+      }
+    }
+  };
+
+
+  // =====================================
+  // RENDER
+  // =====================================
+
   return (
+
     <div className="expensesPage">
 
+      {/* =====================================
+          HEADER
+      ===================================== */}
+
       <div className="expenseHeader">
-        <h1>💰 Trip Expenses</h1>
+
+        <h1>
+          💰 Trip Expenses
+        </h1>
+
         <p>
           Track every expense and stay within your budget.
         </p>
+
       </div>
 
-      {/* SUMMARY */}
+
+      {/* =====================================
+          SUMMARY
+      ===================================== */}
 
       <div className="summaryGrid">
 
+        {/* BUDGET */}
+
         <div className="summaryCard budgetCard">
+
           <FaWallet className="summaryIcon" />
-          <h3>Budget</h3>
+
+          <h3>
+            Budget
+          </h3>
+
           <p>
             ₹{Number(summary.budget).toLocaleString()}
           </p>
+
         </div>
 
+
+        {/* SPENT */}
+
         <div className="summaryCard expenseCard">
+
           <FaMoneyBillWave className="summaryIcon" />
-          <h3>Spent</h3>
+
+          <h3>
+            Spent
+          </h3>
+
           <p>
             ₹{Number(summary.totalExpense).toLocaleString()}
           </p>
+
         </div>
 
+
+        {/* REMAINING */}
+
         <div className="summaryCard remainCard">
+
           <FaChartPie className="summaryIcon" />
-          <h3>Remaining</h3>
+
+          <h3>
+            Remaining
+          </h3>
+
           <p>
             ₹{Number(summary.remainingBudget).toLocaleString()}
           </p>
+
         </div>
 
+
+        {/* PERCENTAGE */}
+
         <div className="summaryCard percentCard">
+
           <FaChartPie className="summaryIcon" />
-          <h3>Used</h3>
+
+          <h3>
+            Used
+          </h3>
+
           <p>
             {Number(summary.percentageUsed).toFixed(2)}%
           </p>
+
         </div>
 
       </div>
 
-      {/* WARNING */}
+
+      {/* =====================================
+          BUDGET WARNING
+      ===================================== */}
 
       {summary.remainingBudget < 0 && (
+
         <div className="warningBanner">
+
           <FaExclamationTriangle />
+
           Budget Exceeded!
+
         </div>
+
       )}
 
-      {/* ADD EXPENSE */}
+
+      {/* =====================================
+          ADD EXPENSE BUTTON
+      ===================================== */}
 
       <button
         className="addExpenseBtn"
@@ -138,15 +266,25 @@ function Expenses() {
           navigate(`/trip/${id}/add-expense`)
         }
       >
+
         <FaPlus />
+
         Add Expense
+
       </button>
 
-      {/* EXPENSE LIST */}
+
+      {/* =====================================
+          EXPENSE LIST
+      ===================================== */}
 
       <div className="expenseGrid">
 
         {expenses.length === 0 ? (
+
+          /* =====================================
+             EMPTY STATE
+          ===================================== */
 
           <div className="emptyExpense">
 
@@ -165,16 +303,25 @@ function Expenses() {
             <button
               className="addExpenseBtn"
               onClick={() =>
-                navigate(`/trip/${id}/add-expense`)
+                navigate(
+                  `/trip/${id}/add-expense`
+                )
               }
             >
+
               <FaPlus />
+
               Add Expense
+
             </button>
 
           </div>
 
         ) : (
+
+          /* =====================================
+             EXPENSE CARDS
+          ===================================== */
 
           expenses.map((expense) => (
 
@@ -183,6 +330,8 @@ function Expenses() {
               key={expense.id}
             >
 
+              {/* EXPENSE TOP */}
+
               <div className="expenseTop">
 
                 <h2>
@@ -190,30 +339,53 @@ function Expenses() {
                 </h2>
 
                 <span className="amountBadge">
-                  ₹{expense.amount}
+
+                  ₹{Number(
+                    expense.amount
+                  ).toLocaleString()}
+
                 </span>
 
               </div>
 
+
+              {/* EXPENSE INFORMATION */}
+
               <div className="expenseInfo">
 
                 <p>
+
                   <FaTag />
+
                   {expense.category}
+
                 </p>
+
 
                 <p>
+
                   <FaCalendarAlt />
+
                   {expense.expenseDate}
+
                 </p>
 
               </div>
 
+
+              {/* NOTES */}
+
               <div className="expenseNotes">
-                {expense.notes || "No notes added."}
+
+                {expense.notes ||
+                  "No notes added."}
+
               </div>
 
-              {/* ACTION BUTTONS */}
+
+              {/* =====================================
+                  ACTION BUTTONS
+              ===================================== */}
 
               <div
                 style={{
@@ -223,6 +395,8 @@ function Expenses() {
                 }}
               >
 
+                {/* EDIT */}
+
                 <button
                   className="editExpenseBtn"
                   onClick={() =>
@@ -231,18 +405,29 @@ function Expenses() {
                     )
                   }
                 >
+
                   <FaEdit />
+
                   Edit
+
                 </button>
+
+
+                {/* DELETE */}
 
                 <button
                   className="deleteExpenseBtn"
                   onClick={() =>
-                    deleteExpense(expense.id)
+                    deleteExpense(
+                      expense.id
+                    )
                   }
                 >
+
                   <FaTrash />
+
                   Delete
+
                 </button>
 
               </div>

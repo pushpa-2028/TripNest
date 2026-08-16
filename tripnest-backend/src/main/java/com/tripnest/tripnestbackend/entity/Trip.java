@@ -26,4 +26,9 @@ public class Trip {
 
     @Column(length = 1000)
     private String description;
+
+    // Trip owner
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true)
+    private User user;
 }
