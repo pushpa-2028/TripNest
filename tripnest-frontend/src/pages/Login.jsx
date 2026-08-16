@@ -18,12 +18,12 @@ function Login() {
     try {
 
       const response = await API.post(
-        "/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+  "/auth/login",
+  {
+    email: email.trim(),
+    password: password,
+  }
+);
 
       // =====================================
       // SAVE LOGIN INFORMATION
@@ -45,15 +45,28 @@ function Login() {
 
     } catch (error) {
 
-      console.log(
-        "Login error:",
-        error
-      );
+  console.log("Login error:", error);
 
-      alert(
-        "Invalid Email or Password"
-      );
-    }
+  console.log(
+    "Status:",
+    error.response?.status
+  );
+
+  console.log(
+    "Response:",
+    error.response?.data
+  );
+
+  if (error.response) {
+    alert(
+      `Login failed: ${error.response.status}`
+    );
+  } else {
+    alert(
+      "Unable to connect to the server."
+    );
+  }
+}
   };
 
   const handleGoogleLogin = () => {
